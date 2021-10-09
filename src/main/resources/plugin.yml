@@ -1,5 +1,5 @@
 name: VanilandPlugin
 version: '${version}'
-main: land.vani.plugin.vanilandplugin.VanilandPlugin
+main: land.vani.plugin.VanilandPlugin
 api-version: 1.17
 authors: [ rona_tombo ]
