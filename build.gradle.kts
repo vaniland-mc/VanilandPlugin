@@ -1,5 +1,6 @@
 plugins {
     kotlin("jvm") version "1.5.31"
+    kotlin("plugin.serialization") version "1.5.31"
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
 
@@ -30,8 +31,10 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
 }
 
 tasks {
