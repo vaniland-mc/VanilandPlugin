@@ -24,15 +24,20 @@ repositories {
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
+    api("com.github.sya-ri:EasySpigotAPI:2.4.0") {
+        exclude(group = "org.spigotmc", module = "spigot-api")
+    }
+    implementation("net.kyori:adventure-extra-kotlin:4.7.0")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+
+    implementation("io.insert-koin:koin-core:3.1.2")
 
     implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-cio:1.6.4")
     implementation("io.ktor:ktor-client-serialization:1.6.4")
     implementation("io.ktor:ktor-client-logging:1.6.4")
-
 }
 
 val targetJavaVersion = 16
