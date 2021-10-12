@@ -20,6 +20,11 @@ repositories {
         name = "sonatype"
         setUrl("https://oss.sonatype.org/content/groups/public/")
     }
+    maven {
+        name = "PlaceholderAPI repo"
+        setUrl("https://repo.extendedclip.com/content/repositories/placeholderapi/")
+    }
+    maven("https://jitpack.io")
 }
 
 dependencies {
@@ -27,7 +32,14 @@ dependencies {
     api("com.github.sya-ri:EasySpigotAPI:2.4.0") {
         exclude(group = "org.spigotmc", module = "spigot-api")
     }
-    implementation("net.kyori:adventure-extra-kotlin:4.7.0")
+    implementation("net.kyori:adventure-extra-kotlin:4.9.2") {
+        exclude("net.kyori")
+    }
+
+    compileOnly("com.github.LeonMangler:SuperVanish:6.2.6-2") {
+        exclude("com.comphenix.protocol", "ProtocolLib-API")
+        exclude("net.citizensnpcs", "citizensapi")
+    }
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
