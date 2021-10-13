@@ -24,6 +24,10 @@ repositories {
         name = "PlaceholderAPI repo"
         setUrl("https://repo.extendedclip.com/content/repositories/placeholderapi/")
     }
+    maven {
+        name = "sk98q-repo"
+        setUrl("https://maven.enginehub.org/repo/")
+    }
     maven("https://jitpack.io")
 }
 
@@ -40,6 +44,7 @@ dependencies {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
         exclude("net.citizensnpcs", "citizensapi")
     }
+    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
