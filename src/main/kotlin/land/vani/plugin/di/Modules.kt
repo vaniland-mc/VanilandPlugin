@@ -1,7 +1,6 @@
 package land.vani.plugin.di
 
 import com.github.syari.spigot.api.config.config
-import com.github.syari.spigot.api.config.type.ConfigDataType
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
@@ -9,18 +8,19 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.http.ContentType
 import kotlinx.serialization.json.Json
 import land.vani.plugin.VanilandPlugin
+import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
-import land.vani.plugin.gateway.mcbans.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.impl.MCBansGatewayImpl
+import org.bukkit.Bukkit
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 private val configsModule = module {
     single {
         val plugin = get<VanilandPlugin>()
-        val apiKey = plugin.config(null, "mcbans.yml").get("apiKey", ConfigDataType.String)!!
+        val config = plugin.config(Bukkit.getConsoleSender(), "mcbans.yml")
 
-        MCBansConfig(apiKey)
+        MCBansConfig(config, "apiKey")
     }
 }
 
