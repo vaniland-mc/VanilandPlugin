@@ -5,8 +5,8 @@ import com.google.common.cache.CacheBuilder
 import io.ktor.client.HttpClient
 import io.ktor.client.request.forms.submitForm
 import io.ktor.http.Parameters
+import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
-import land.vani.plugin.gateway.mcbans.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.model.MCBansLookupResponse
 import java.util.UUID
 import java.util.concurrent.TimeUnit
