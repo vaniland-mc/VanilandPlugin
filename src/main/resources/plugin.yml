@@ -5,6 +5,7 @@ api-version: 1.17
 authors: [ rona_tombo ]
 depend:
   - EasySpigotAPI
+  - WorldGuard
 
 permissions:
   vaniland.admin.mcbans:
@@ -13,3 +14,6 @@ permissions:
   vaniland.admin.inspector:
     default: op
     description: Can enable/disable inspector mode
+  vaniland.admin.tp.world:
+    default: op
+    description: Open world teleport menu

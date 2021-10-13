@@ -1,6 +1,8 @@
 package land.vani.plugin.di
 
 import com.github.syari.spigot.api.config.config
+import com.github.syari.spigot.api.config.def.DefaultConfigResource
+import com.sk89q.worldguard.WorldGuard
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
@@ -9,6 +11,7 @@ import io.ktor.http.ContentType
 import kotlinx.serialization.json.Json
 import land.vani.plugin.VanilandPlugin
 import land.vani.plugin.config.MCBansConfig
+import land.vani.plugin.config.WorldMenuConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
 import land.vani.plugin.gateway.mcbans.impl.MCBansGatewayImpl
 import org.bukkit.Bukkit
@@ -20,7 +23,13 @@ private val configsModule = module {
         val plugin = get<VanilandPlugin>()
         val config = plugin.config(Bukkit.getConsoleSender(), "mcbans.yml")
 
-        MCBansConfig(config, "apiKey")
+        MCBansConfig(config)
+    }
+    single {
+        val plugin = get<VanilandPlugin>()
+        val config = plugin.config(Bukkit.getConsoleSender(), "worldMenu.yml")
+
+        WorldMenuConfig(config)
     }
 }
 
@@ -43,6 +52,10 @@ private val gatewayMCBansModules = module {
     single<MCBansGateway> { MCBansGatewayImpl(get(), get()) }
 }
 
+private val dependPluginsModule = module {
+    single { WorldGuard.getInstance().platform.regionContainer }
+}
+
 fun makeModules(plugin: VanilandPlugin): List<Module> {
     val pluginModule = module {
         single { plugin }
@@ -51,5 +64,6 @@ fun makeModules(plugin: VanilandPlugin): List<Module> {
     return pluginModule +
             configsModule +
             httpClientModule +
-            gatewayMCBansModules
+            gatewayMCBansModules +
+            dependPluginsModule
 }
