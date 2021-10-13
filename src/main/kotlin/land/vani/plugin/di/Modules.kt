@@ -21,7 +21,7 @@ import org.koin.dsl.module
 private val configsModule = module {
     single {
         val plugin = get<VanilandPlugin>()
-        val config = plugin.config(Bukkit.getConsoleSender(), "mcbans.yml")
+        val config = plugin.config(Bukkit.getConsoleSender(), "mcBans.yml", DefaultConfigResource(plugin, "mcBans.yml"))
 
         MCBansConfig(config)
     }
