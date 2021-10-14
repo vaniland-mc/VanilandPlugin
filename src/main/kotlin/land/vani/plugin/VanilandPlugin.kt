@@ -9,6 +9,7 @@ import land.vani.plugin.command.inspectorCommand
 import land.vani.plugin.command.teleportWorldMenu
 import land.vani.plugin.command.vanilandCommand
 import land.vani.plugin.di.makeModules
+import land.vani.plugin.listener.group.groupIntegration
 import land.vani.plugin.listener.mcBansLookup
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
@@ -41,6 +42,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
     private fun registerFeatures() {
         events {
             mcBansLookup(get())
+            groupIntegration(get())
         }
 
         inspectorCommand()
