@@ -14,6 +14,7 @@ import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.config.WorldMenuConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
 import land.vani.plugin.gateway.mcbans.impl.MCBansGatewayImpl
+import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -54,6 +55,9 @@ private val gatewayMCBansModules = module {
 
 private val dependPluginsModule = module {
     single { WorldGuard.getInstance().platform.regionContainer }
+    single {
+        Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)!!.provider
+    }
 }
 
 fun makeModules(plugin: VanilandPlugin): List<Module> {

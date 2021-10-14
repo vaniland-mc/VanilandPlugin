@@ -45,6 +45,8 @@ dependencies {
         exclude("net.citizensnpcs", "citizensapi")
     }
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6")
+    compileOnly("com.github.ucchyocean:LunaChat:v3.0.16")
+    compileOnly("net.luckperms:api:5.3")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")

@@ -6,6 +6,8 @@ authors: [ rona_tombo ]
 depend:
   - EasySpigotAPI
   - WorldGuard
+  - LuckPerms
+  - LunaChat
 
 permissions:
   vaniland.admin.mcbans:
