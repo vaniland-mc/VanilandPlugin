@@ -61,5 +61,10 @@
       <option name="name" value="sk98q-repo" />
       <option name="url" value="https://maven.enginehub.org/repo/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="BanManager repo" />
+      <option name="name" value="BanManager repo" />
+      <option name="url" value="https://ci.frostcast.net/plugin/repository/everything" />
+    </remote-repository>
   </component>
 </project>

@@ -5,11 +5,13 @@ import com.github.syari.spigot.api.event.events
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.runBlocking
 import land.vani.plugin.command.inspectorCommand
 import land.vani.plugin.command.mcBansCommand
 import land.vani.plugin.command.vanilandCommand
 import land.vani.plugin.command.worldMenuCommand
 import land.vani.plugin.di.makeModules
+import land.vani.plugin.listener.banManager
 import land.vani.plugin.listener.group.groupIntegration
 import land.vani.plugin.listener.mcBansLookup
 import org.bukkit.plugin.java.JavaPlugin
@@ -42,8 +44,11 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
 
     private fun registerFeatures() {
         events {
-            mcBansLookup(get(), get(), get())
-            groupIntegration(get())
+            runBlocking {
+                mcBansLookup(get(), get(), get())
+                groupIntegration(get())
+                banManager(get(), get())
+            }
         }
 
         inspectorCommand()
