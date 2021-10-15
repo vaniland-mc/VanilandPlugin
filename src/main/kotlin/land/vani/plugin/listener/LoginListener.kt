@@ -1,11 +1,17 @@
 package land.vani.plugin.listener
 
 import com.github.syari.spigot.api.event.Events
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.behavior.channel.createEmbed
+import dev.kord.core.behavior.getChannelOf
+import dev.kord.core.entity.Guild
+import dev.kord.core.entity.channel.TextChannel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import land.vani.plugin.VanilandPlugin
+import land.vani.plugin.config.DiscordConfig
 import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
 import land.vani.plugin.permission.NOTIFY_MCBANS_LOOKUP
@@ -21,11 +27,15 @@ import org.slf4j.Logger
 
 private val scope = VanilandPlugin + Job()
 
-fun Events.mcBansLookup(
+suspend fun Events.mcBansLookup(
     mcBansGateway: MCBansGateway,
     mcBansConfig: MCBansConfig,
+    discordConfig: DiscordConfig,
+    guild: Guild,
     logger: Logger,
 ) {
+    val channel = guild.getChannelOf<TextChannel>(Snowflake(discordConfig.mcBansNotifyChannel))
+
     event<AsyncPlayerPreLoginEvent> { event ->
         scope.launch {
             delay(2000)
@@ -101,6 +111,20 @@ fun Events.mcBansLookup(
                 .forEach { admin ->
                     admin.sendMessage(message)
                 }
+
+            scope.launch {
+                channel.createEmbed {
+                    author {
+                        name = "MCBans"
+                    }
+                    description = "Ban履歴のあるプレイヤーのログインを検知しました"
+                    field("MinecraftID") { "${player.name}" }
+                    field("UUID") { "${player.id}" }
+                    field("評価値") { "${response.reputation}" }
+                    field("GlobalBan件数") { "${response.global.size}" }
+                    field("LocalBan件数") { "${response.local.size}" }
+                }
+            }
         }
     }
 }
