@@ -30,7 +30,7 @@ private val mobSelection = mutableMapOf<UUID, MutableSet<Entity>>()
 /worldMenu mob cancel
 /worldMenu mob cancel rona_tombo
  */
-fun VanilandPlugin.teleportWorldMenu() {
+fun VanilandPlugin.worldMenuCommand() {
     command("worldMenu") {
         permission = TELEPORT_WORLD_MENU
 

@@ -6,8 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import land.vani.plugin.command.inspectorCommand
-import land.vani.plugin.command.teleportWorldMenu
+import land.vani.plugin.command.mcBansCommand
 import land.vani.plugin.command.vanilandCommand
+import land.vani.plugin.command.worldMenuCommand
 import land.vani.plugin.di.makeModules
 import land.vani.plugin.listener.group.groupIntegration
 import land.vani.plugin.listener.mcBansLookup
@@ -41,13 +42,14 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
 
     private fun registerFeatures() {
         events {
-            mcBansLookup(get())
+            mcBansLookup(get(), get(), get())
             groupIntegration(get())
         }
 
         inspectorCommand()
-        teleportWorldMenu()
+        worldMenuCommand()
         vanilandCommand()
+        mcBansCommand(get())
     }
 
     companion object : CoroutineScope {

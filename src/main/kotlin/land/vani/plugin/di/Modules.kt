@@ -63,6 +63,7 @@ private val dependPluginsModule = module {
 fun makeModules(plugin: VanilandPlugin): List<Module> {
     val pluginModule = module {
         single { plugin }
+        single { plugin.slF4JLogger }
     }
 
     return pluginModule +

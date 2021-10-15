@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
 import land.vani.plugin.VanilandPlugin
+import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
 import land.vani.plugin.permission.NOTIFY_MCBANS_LOOKUP
 import net.kyori.adventure.extra.kotlin.plus
@@ -22,6 +23,7 @@ private val scope = VanilandPlugin + Job()
 
 fun Events.mcBansLookup(
     mcBansGateway: MCBansGateway,
+    mcBansConfig: MCBansConfig,
     logger: Logger,
 ) {
     event<AsyncPlayerPreLoginEvent> { event ->
@@ -30,11 +32,16 @@ fun Events.mcBansLookup(
             val player = event.playerProfile
             val response = mcBansGateway.lookupPlayer(player.id!!)
             if (response == null) {
-                logger.warn("MCBans API is downed, we passed check player ${player.name}")
+                logger.warn("[MCBans] MCBans API is downed, we passed check player ${player.name}")
                 return@launch
             }
 
             if (response.run { local.isEmpty() && global.isEmpty() }) {
+                return@launch
+            }
+
+            if (player.id in mcBansConfig.ignoredUuidList) {
+                logger.info("[MCBans] ${player.name} has ban history at MCBans, but ignored.")
                 return@launch
             }
 
