@@ -28,6 +28,10 @@ repositories {
         name = "sk98q-repo"
         setUrl("https://maven.enginehub.org/repo/")
     }
+    maven {
+        name = "BanManager repo"
+        setUrl("https://ci.frostcast.net/plugin/repository/everything")
+    }
     maven("https://jitpack.io")
 }
 
@@ -47,6 +51,7 @@ dependencies {
     compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6")
     compileOnly("com.github.ucchyocean:LunaChat:v3.0.16")
     compileOnly("net.luckperms:api:5.3")
+    compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
 
     implementation(kotlin("stdlib-jdk8"))
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
@@ -57,6 +62,8 @@ dependencies {
     implementation("io.ktor:ktor-client-cio:1.6.4")
     implementation("io.ktor:ktor-client-serialization:1.6.4")
     implementation("io.ktor:ktor-client-logging:1.6.4")
+
+    implementation("dev.kord:kord-core:0.8.0-M7")
 }
 
 val targetJavaVersion = 16

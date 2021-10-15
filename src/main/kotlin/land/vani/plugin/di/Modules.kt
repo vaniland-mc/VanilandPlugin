@@ -3,13 +3,17 @@ package land.vani.plugin.di
 import com.github.syari.spigot.api.config.config
 import com.github.syari.spigot.api.config.def.DefaultConfigResource
 import com.sk89q.worldguard.WorldGuard
+import dev.kord.common.entity.Snowflake
+import dev.kord.core.Kord
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.cio.CIO
 import io.ktor.client.features.json.JsonFeature
 import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.http.ContentType
+import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
 import land.vani.plugin.VanilandPlugin
+import land.vani.plugin.config.DiscordConfig
 import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.config.WorldMenuConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
@@ -32,6 +36,12 @@ private val configsModule = module {
 
         WorldMenuConfig(config)
     }
+    single {
+        val plugin = get<VanilandPlugin>()
+        val config = plugin.config(Bukkit.getConsoleSender(), "discord.yml")
+
+        DiscordConfig(config)
+    }
 }
 
 private val httpClientModule = module {
@@ -49,8 +59,21 @@ private val httpClientModule = module {
     }
 }
 
-private val gatewayMCBansModules = module {
+private val gatewaysModules = module {
     single<MCBansGateway> { MCBansGatewayImpl(get(), get()) }
+    single {
+        val config = get<DiscordConfig>()
+        runBlocking {
+            Kord(config.token)
+        }
+    }
+    single {
+        val config = get<DiscordConfig>()
+        val kord = get<Kord>()
+        runBlocking {
+            kord.getGuild(Snowflake(config.guildId))
+        }
+    }
 }
 
 private val dependPluginsModule = module {
@@ -69,6 +92,6 @@ fun makeModules(plugin: VanilandPlugin): List<Module> {
     return pluginModule +
             configsModule +
             httpClientModule +
-            gatewayMCBansModules +
+            gatewaysModules +
             dependPluginsModule
 }
