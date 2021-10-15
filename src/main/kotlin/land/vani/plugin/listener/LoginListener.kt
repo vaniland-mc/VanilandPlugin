@@ -16,17 +16,23 @@ import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent
+import org.slf4j.Logger
 
 private val scope = VanilandPlugin + Job()
 
 fun Events.mcBansLookup(
     mcBansGateway: MCBansGateway,
+    logger: Logger,
 ) {
     event<AsyncPlayerPreLoginEvent> { event ->
         scope.launch {
             delay(2000)
             val player = event.playerProfile
             val response = mcBansGateway.lookupPlayer(player.id!!)
+            if (response == null) {
+                logger.warn("MCBans API is downed, we passed check player ${player.name}")
+                return@launch
+            }
 
             if (response.run { local.isEmpty() && global.isEmpty() }) {
                 return@launch
