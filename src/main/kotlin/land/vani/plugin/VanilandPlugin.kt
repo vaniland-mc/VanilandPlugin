@@ -45,7 +45,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
     private fun registerFeatures() {
         events {
             runBlocking {
-                mcBansLookup(get(), get(), get())
+                mcBansLookup(get(), get(), get(), get(), get())
                 groupIntegration(get())
                 banManager(get(), get())
             }
