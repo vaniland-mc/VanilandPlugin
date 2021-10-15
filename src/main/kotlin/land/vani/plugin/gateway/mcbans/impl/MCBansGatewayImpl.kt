@@ -3,7 +3,10 @@ package land.vani.plugin.gateway.mcbans.impl
 import com.google.common.cache.Cache
 import com.google.common.cache.CacheBuilder
 import io.ktor.client.HttpClient
+import io.ktor.client.call.receive
 import io.ktor.client.request.forms.submitForm
+import io.ktor.client.statement.HttpResponse
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
 import land.vani.plugin.config.MCBansConfig
 import land.vani.plugin.gateway.mcbans.MCBansGateway
@@ -16,11 +19,11 @@ class MCBansGatewayImpl(
     private val config: MCBansConfig,
 ) : MCBansGateway {
     @Suppress("EXPERIMENTAL_API_USAGE_FUTURE_ERROR")
-    override suspend fun lookupPlayer(uuid: UUID): MCBansLookupResponse {
+    override suspend fun lookupPlayer(uuid: UUID): MCBansLookupResponse? {
         // キャッシュにヒットしたらそのまま返す
         cache.getIfPresent(uuid)?.let { return it }
 
-        val response = client.submitForm<MCBansLookupResponse>(
+        val response = client.submitForm<HttpResponse>(
             url = "https://api.mcbans.com/v3/${config.apiKey}",
             formParameters = Parameters.build {
                 append("player_uuid", "$uuid")
@@ -30,7 +33,11 @@ class MCBansGatewayImpl(
             }
         )
 
-        return response
+        if (response.status != HttpStatusCode.OK) {
+            return null
+        }
+
+        return response.receive()
     }
 
     companion object {
