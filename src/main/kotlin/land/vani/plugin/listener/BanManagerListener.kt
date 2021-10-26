@@ -168,7 +168,10 @@ suspend fun Events.banManager(
 }
 
 private fun Long.toDateTimeString() =
-    Instant.ofEpochMilli(this)
-        .atZone(ZoneId.of("Asia/Tokyo"))
-        .toLocalDateTime()
-        .format(dateTimeFormatter)
+    if (this == 0L) {
+        "無期限"
+    } else {
+        Instant.ofEpochSecond(this)
+            .atZone(ZoneId.systemDefault())
+            .format(dateTimeFormatter)
+    }
