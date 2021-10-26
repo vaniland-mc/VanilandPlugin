@@ -2,9 +2,11 @@ package land.vani.plugin
 
 import com.github.syari.spigot.api.EasySpigotAPIOption
 import com.github.syari.spigot.api.event.events
+import dev.kord.core.Kord
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import land.vani.plugin.command.inspectorCommand
 import land.vani.plugin.command.mcBansCommand
@@ -25,10 +27,12 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
         setupKoin()
         setupCustomInventory()
         registerFeatures()
+        startKord()
     }
 
     override fun onDisable() {
         cancel("Disabling plugin")
+        stopKord()
     }
 
     private fun setupKoin() {
@@ -55,6 +59,20 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
         worldMenuCommand()
         vanilandCommand()
         mcBansCommand(get())
+    }
+
+    private fun startKord() {
+        val kord = get<Kord>()
+        launch {
+            kord.login()
+        }
+    }
+
+    private fun stopKord() {
+        val kord = get<Kord>()
+        runBlocking {
+            kord.logout()
+        }
     }
 
     companion object : CoroutineScope {
