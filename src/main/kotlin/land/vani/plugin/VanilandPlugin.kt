@@ -5,7 +5,6 @@ import com.github.syari.spigot.api.event.events
 import dev.kord.core.Kord
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import land.vani.plugin.command.inspectorCommand
@@ -31,7 +30,6 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
     }
 
     override fun onDisable() {
-        cancel("Disabling plugin")
         stopKord()
     }
 
