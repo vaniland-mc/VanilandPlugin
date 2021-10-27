@@ -2,7 +2,6 @@ package land.vani.plugin.di
 
 import com.github.syari.spigot.api.config.config
 import com.github.syari.spigot.api.config.def.DefaultConfigResource
-import com.sk89q.worldguard.WorldGuard
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import io.ktor.client.HttpClient
@@ -77,7 +76,6 @@ private val gatewaysModules = module {
 }
 
 private val dependPluginsModule = module {
-    single { WorldGuard.getInstance().platform.regionContainer }
     single {
         Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)!!.provider
     }

@@ -21,14 +21,6 @@ repositories {
         setUrl("https://oss.sonatype.org/content/groups/public/")
     }
     maven {
-        name = "PlaceholderAPI repo"
-        setUrl("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-    }
-    maven {
-        name = "sk98q-repo"
-        setUrl("https://maven.enginehub.org/repo/")
-    }
-    maven {
         name = "BanManager repo"
         setUrl("https://ci.frostcast.net/plugin/repository/everything")
     }
@@ -47,13 +39,17 @@ dependencies {
     compileOnly("com.github.LeonMangler:SuperVanish:6.2.6-2") {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
         exclude("net.citizensnpcs", "citizensapi")
+        exclude("com.sk89q.worldguard", "worldguard-bukkit")
+        exclude("me.clip", "placeholderapi")
+        exclude("org.bstats", "bstats-bukkit")
     }
-    compileOnly("com.sk89q.worldguard:worldguard-bukkit:7.0.6")
-    compileOnly("com.github.ucchyocean:LunaChat:v3.0.16")
+    compileOnly("com.github.ucchyocean:LunaChat:v3.0.16") {
+        exclude("org.bstats")
+    }
     compileOnly("net.luckperms:api:5.3")
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
 
-    implementation(kotlin("stdlib-jdk8"))
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
 
     implementation("io.insert-koin:koin-core:3.1.2")
