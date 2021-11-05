@@ -44,6 +44,9 @@ fun VanilandPlugin.worldMenuCommand() {
             argument("mob") {
                 addAll(Bukkit.getOnlinePlayers().map { it.name })
             }
+            argument("mob *") {
+                addAll("select", "cancel")
+            }
         }
 
         execute {
