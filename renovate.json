@@ -11,6 +11,8 @@
         "https://repo.maven.apache.org/maven2/",
         "https://hub.spigotmc.org/nexus/content/repositories/snapshots/",
         "https://oss.sonatype.org/content/groups/public/",
+        "https://ci.frostcast.net/plugin/repository/everything",
+        "https://jitpack.io",
         "https://plugins.gradle.org/m2/"
       ]
     },
