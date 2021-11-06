@@ -8,6 +8,7 @@ import com.github.syari.spigot.api.inventory.inventory
 import land.vani.plugin.VanilandPlugin
 import land.vani.plugin.config.WorldMenuConfig
 import land.vani.plugin.permission.TELEPORT_WORLD_MENU
+import land.vani.plugin.util.displayName
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.event.ClickEvent
@@ -15,6 +16,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.koin.core.component.get
@@ -86,10 +88,10 @@ private fun executeOpenCommand(sender: CommandSender, args: CommandArgument, con
         config.worlds.forEach { worldMenuDetails ->
             item(worldMenuDetails.slot, worldMenuDetails.itemStack) {
                 onClick {
+                    target.teleport(worldMenuDetails.teleportLocation)
                     mobSelection.remove(target.uniqueId)?.forEach {
                         it.teleport(worldMenuDetails.teleportLocation)
                     }
-                    target.teleport(worldMenuDetails.teleportLocation)
                 }
             }
         }
@@ -103,7 +105,7 @@ private fun executeMobCommand(sender: CommandSender, args: CommandArgument) {
         "select" -> {
             val mobToMoveList = mobSelection[target.uniqueId]
             if (mobToMoveList != null) {
-                sender.sendMessage(
+                target.sendMessage(
                     text {
                         content("既にMobの選択を開始しています")
                         color(NamedTextColor.RED)
@@ -117,6 +119,48 @@ private fun executeMobCommand(sender: CommandSender, args: CommandArgument) {
                 text {
                     content("ワールドを移動させるMobを右クリックしてください")
                     color(NamedTextColor.GREEN)
+                }
+            )
+        }
+        "remove" -> {
+            val targetPlayer = getTarget(sender, args, 2) ?: run {
+                sender.sendMessage("対象が見つかりませんでした")
+                return
+            }
+            val selectedMobs = mobSelection[targetPlayer.uniqueId] ?: run {
+                sender.sendMessage("Mobの選択を開始していません")
+                return
+            }
+            val entityUuid = args.lowerOrNull(3)?.let {
+                runCatching { UUID.fromString(it) }.getOrNull()
+            } ?: run {
+                sender.sendMessage("エンティティが指定されていないか、正しいUUIDではありません")
+            }
+            val removed = selectedMobs.removeIf { it.uniqueId == entityUuid }
+            if (removed) {
+                sender.sendMessage("削除しました")
+            } else {
+                sender.sendMessage("そのMobは見つかりませんでした")
+            }
+
+            sender.sendMessage(
+                text {
+                    content("現在輸送対象の動物\n")
+                } + text {
+                    selectedMobs.forEach { entity ->
+                        text {
+                            content("${entity.name}(${entity.type})\n")
+                            color(NamedTextColor.WHITE)
+                            hoverEvent(
+                                text {
+                                    content("クリックでこの動物を輸送対象から削除")
+                                }
+                            )
+                            clickEvent(ClickEvent.runCommand("/worldMenu mob remove ${sender.name} ${entity.uniqueId}"))
+                        }.let {
+                            append(it)
+                        }
+                    }
                 }
             )
         }
@@ -159,36 +203,60 @@ private fun getTarget(sender: CommandSender, args: CommandArgument, targetNameIn
         }
     }
 
+private val TELEPORTABLE_ENTITY_TYPES = setOf(
+    EntityType.BEE,
+    EntityType.CAT,
+    EntityType.CHICKEN,
+    EntityType.COW,
+    EntityType.DONKEY,
+    EntityType.FOX,
+    EntityType.HORSE,
+    EntityType.LLAMA,
+    EntityType.MULE,
+    EntityType.MUSHROOM_COW,
+    EntityType.OCELOT,
+    EntityType.PANDA,
+    EntityType.PARROT,
+    EntityType.PIG,
+    EntityType.RABBIT,
+    EntityType.SHEEP,
+    EntityType.STRIDER,
+    EntityType.TURTLE,
+    EntityType.WOLF
+)
+
 private fun VanilandPlugin.registerEventListener() {
     events {
         event<PlayerInteractEntityEvent> { event ->
-            mobSelection[event.player.uniqueId]?.let { selectedMobs ->
-                selectedMobs += event.rightClicked
+            val selectedMobs = mobSelection[event.player.uniqueId] ?: return@event
+            if (event.rightClicked in selectedMobs) return@event
+            if (event.rightClicked.type !in TELEPORTABLE_ENTITY_TYPES) return@event
 
-                event.player.sendMessage(
-                    text {
-                        content("${event.rightClicked.name}を追加しました\n")
-                        color(NamedTextColor.GREEN)
-                    } + text {
-                        content("現在輸送対象の動物\n")
-                    } + text {
-                        selectedMobs.forEach { entity ->
-                            text {
-                                content("${entity.name}(${entity.type})\n")
-                                color(NamedTextColor.WHITE)
-                                hoverEvent(
-                                    text {
-                                        content("クリックでこの動物を輸送対象から削除")
-                                    }
-                                )
-                                clickEvent(ClickEvent.runCommand("/worldMenu mob remove ${event.player.name} ${entity.uniqueId}"))
-                            }.let {
-                                append(it)
-                            }
+            selectedMobs += event.rightClicked
+
+            event.player.sendMessage(
+                text {
+                    content("${event.rightClicked.displayName}を追加しました\n")
+                    color(NamedTextColor.GREEN)
+                } + text {
+                    content("現在輸送対象の動物\n")
+                } + text {
+                    selectedMobs.forEach { entity ->
+                        text {
+                            content("${entity.name}(${entity.type})\n")
+                            color(NamedTextColor.WHITE)
+                            hoverEvent(
+                                text {
+                                    content("クリックでこの動物を輸送対象から削除")
+                                }
+                            )
+                            clickEvent(ClickEvent.runCommand("/worldMenu mob remove ${event.player.name} ${entity.uniqueId}"))
+                        }.let {
+                            append(it)
                         }
                     }
-                )
-            }
+                }
+            )
         }
     }
 }
