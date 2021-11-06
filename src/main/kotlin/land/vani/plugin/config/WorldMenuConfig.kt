@@ -12,11 +12,11 @@ class WorldMenuConfig(
     val worlds: List<WorldMenuDetails>
         get() = inner.run {
             section("worlds")?.map { worldId ->
-                val slot = get("worlds.${worldId}.slot", ConfigDataType.Int)!!
-                val material = get("worlds.${worldId}.material", ConfigDataType.Material)!!
-                val displayName = get("worlds.${worldId}.displayName", ConfigDataType.String)!!
-                val lore = get("worlds.${worldId}.lore", ConfigDataType.StringList)!!
-                val teleportLocation = get("worlds.${worldId}.location", ConfigDataType.Location)!!
+                val slot = get("worlds.$worldId.slot", ConfigDataType.Int)!!
+                val material = get("worlds.$worldId.material", ConfigDataType.Material)!!
+                val displayName = get("worlds.$worldId.displayName", ConfigDataType.String)!!
+                val lore = get("worlds.$worldId.lore", ConfigDataType.StringList)!!
+                val teleportLocation = get("worlds.$worldId.location", ConfigDataType.Location)!!
                 WorldMenuDetails(slot, itemStack(material, displayName, lore), teleportLocation)
             }!!
         }

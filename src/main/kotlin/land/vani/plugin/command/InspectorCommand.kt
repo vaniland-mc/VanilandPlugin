@@ -4,6 +4,8 @@ import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument
 import de.myzelyam.api.vanish.VanishAPI
 import land.vani.plugin.VanilandPlugin
+import land.vani.plugin.command.util.getTarget
+import land.vani.plugin.command.util.requirePlayer
 import land.vani.plugin.permission.INSPECTOR_MODE
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
@@ -26,15 +28,7 @@ fun VanilandPlugin.inspectorCommand() {
         }
 
         execute {
-            if (sender !is Player) {
-                sender.sendMessage(
-                    text {
-                        content("このコマンドはゲーム内からのみ実行できます")
-                        color(NamedTextColor.RED)
-                    }
-                )
-                return@execute
-            }
+            sender.requirePlayer()
             val player = sender as Player
 
             if (args.size != 2) {
@@ -47,26 +41,7 @@ fun VanilandPlugin.inspectorCommand() {
             }
             when (args.lowerOrNull(0)) {
                 "tp" -> {
-                    val targetName = args.lowerOrNull(1)
-                    if (targetName.isNullOrEmpty()) {
-                        sender.sendMessage(
-                            text {
-                                content("対象のプレイヤーを指定してください")
-                                color(NamedTextColor.RED)
-                            }
-                        )
-                        return@execute
-                    }
-                    val target = Bukkit.getPlayer(targetName)
-                    if (target == null) {
-                        sender.sendMessage(
-                            text {
-                                content("プレイヤーが見つかりませんでした")
-                                color(NamedTextColor.RED)
-                            }
-                        )
-                        return@execute
-                    }
+                    val target = getTarget(sender, args, 1) ?: return@execute
 
                     player.gameMode = GameMode.SPECTATOR
                     VanishAPI.hidePlayer(player)

@@ -31,6 +31,15 @@ suspend fun Events.banManager(
 ) {
     val channel = guild.getChannelOf<TextChannel>(Snowflake(config.banManagerNotifyChannel))
 
+    registerIpBannedListener(channel)
+    registerIpMutedListener(channel)
+    registerIpRangeBannedEvent(channel)
+    registerPlayerBannedEvent(channel)
+    registerPlayerMutedEvent(channel)
+    registerPlayerWarnedEvent(channel)
+}
+
+private fun Events.registerIpBannedListener(channel: TextChannel) {
     event<IpBannedEvent> { event ->
         scope.launch {
             val actor = event.ban.actor.name
@@ -51,7 +60,9 @@ suspend fun Events.banManager(
             }
         }
     }
+}
 
+private fun Events.registerIpMutedListener(channel: TextChannel) {
     event<IpMutedEvent> { event ->
         scope.launch {
             val actor = event.mute.actor.name
@@ -72,7 +83,9 @@ suspend fun Events.banManager(
             }
         }
     }
+}
 
+private fun Events.registerIpRangeBannedEvent(channel: TextChannel) {
     event<IpRangeBannedEvent> { event ->
         scope.launch {
             val actor = event.ban.actor.name
@@ -94,7 +107,9 @@ suspend fun Events.banManager(
             }
         }
     }
+}
 
+private fun Events.registerPlayerBannedEvent(channel: TextChannel) {
     event<PlayerBannedEvent> { event ->
         scope.launch {
             val actor = event.ban.actor.name
@@ -117,7 +132,9 @@ suspend fun Events.banManager(
             }
         }
     }
+}
 
+private fun Events.registerPlayerMutedEvent(channel: TextChannel) {
     event<PlayerMutedEvent> { event ->
         scope.launch {
             val actor = event.mute.actor.name
@@ -140,7 +157,9 @@ suspend fun Events.banManager(
             }
         }
     }
+}
 
+private fun Events.registerPlayerWarnedEvent(channel: TextChannel) {
     event<PlayerWarnedEvent> { event ->
         scope.launch {
             val actor = event.warning.actor.name

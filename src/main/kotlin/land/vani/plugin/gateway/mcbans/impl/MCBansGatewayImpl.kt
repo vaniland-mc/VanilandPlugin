@@ -33,11 +33,9 @@ class MCBansGatewayImpl(
             }
         )
 
-        if (response.status != HttpStatusCode.OK) {
-            return null
-        }
-
-        return response.receive()
+        return if (response.status != HttpStatusCode.OK) {
+            null
+        } else response.receive()
     }
 
     companion object {

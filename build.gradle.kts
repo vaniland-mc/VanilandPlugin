@@ -1,8 +1,11 @@
+import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.5.31"
     kotlin("plugin.serialization") version "1.5.31"
+
+    id("io.gitlab.arturbosch.detekt") version "1.18.1"
 
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
@@ -28,6 +31,8 @@ repositories {
 }
 
 dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.18.1")
+
     compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
     api("com.github.sya-ri:EasySpigotAPI:2.4.0") {
         exclude(group = "org.spigotmc", module = "spigot-api")
@@ -72,6 +77,14 @@ java {
     }
 }
 
+detekt {
+    buildUponDefaultConfig = true
+
+    reports {
+        xml.enabled = true
+    }
+}
+
 tasks {
     withType<KotlinCompile> {
         this.kotlinOptions {
@@ -80,7 +93,10 @@ tasks {
     }
 
     processResources {
-        include("plugin.yml")
         expand("version" to version)
+    }
+
+    withType<Detekt> {
+        jvmTarget = "$targetJavaVersion"
     }
 }
