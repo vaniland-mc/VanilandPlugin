@@ -1,5 +1,35 @@
 {
   "extends": [
     "config:base"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "maven"
+      ],
+      "registryUrls": [
+        "https://repo.maven.apache.org/maven2/",
+        "https://hub.spigotmc.org/nexus/content/repositories/snapshots/",
+        "https://oss.sonatype.org/content/groups/public/",
+        "https://plugins.gradle.org/m2/"
+      ]
+    },
+    {
+      "matchPackagePrefixes": [
+        "io.ktor:"
+      ],
+      "groupName": "ktor"
+    },
+    {
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
+      "automerge": true
+    }
+  ],
+  "commitMessagePrefix": "⬆️ ",
+  "labels": [
+    "dependencies"
   ]
 }
