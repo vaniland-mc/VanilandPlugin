@@ -65,6 +65,9 @@ dependencies {
     implementation("io.ktor:ktor-client-logging:1.6.4")
 
     implementation("dev.kord:kord-core:0.8.0-M7")
+
+    testImplementation("io.kotest:kotest-runner-junit5:5.0.0.659-SNAPSHOT")
+    testImplementation("io.kotest:kotest-assertions-core:5.0.0.659-SNAPSHOT")
 }
 
 val targetJavaVersion = 16
@@ -78,8 +81,6 @@ java {
 }
 
 detekt {
-    buildUponDefaultConfig = true
-
     reports {
         xml.enabled = true
     }
@@ -87,13 +88,17 @@ detekt {
 
 tasks {
     withType<KotlinCompile> {
-        this.kotlinOptions {
+        kotlinOptions {
             this.jvmTarget = "$targetJavaVersion"
         }
     }
 
     processResources {
         expand("version" to version)
+    }
+
+    withType<Test> {
+        useJUnitPlatform()
     }
 
     withType<Detekt> {

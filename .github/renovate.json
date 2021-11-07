@@ -23,6 +23,12 @@
       "groupName": "ktor"
     },
     {
+      "matchPackagePrefixes": [
+        "io.kotest:"
+      ],
+      "groupName": "kotest"
+    },
+    {
       "matchUpdateTypes": [
         "minor",
         "patch"
