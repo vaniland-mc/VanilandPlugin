@@ -48,7 +48,7 @@ dependencies {
         exclude("me.clip", "placeholderapi")
         exclude("org.bstats", "bstats-bukkit")
     }
-    compileOnly("com.github.ucchyocean:LunaChat:v3.0.16") {
+    compileOnly("com.github.ucchyocean:LunaChat:3.0.16") {
         exclude("org.bstats")
     }
     compileOnly("net.luckperms:api:5.3")
