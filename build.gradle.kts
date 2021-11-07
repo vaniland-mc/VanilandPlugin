@@ -55,7 +55,7 @@ dependencies {
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
 
     implementation("io.insert-koin:koin-core:3.1.3")
 
