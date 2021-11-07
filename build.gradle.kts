@@ -57,7 +57,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.5.31")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2-native-mt")
 
-    implementation("io.insert-koin:koin-core:3.1.2")
+    implementation("io.insert-koin:koin-core:3.1.3")
 
     implementation("io.ktor:ktor-client-core:1.6.4")
     implementation("io.ktor:ktor-client-cio:1.6.4")
