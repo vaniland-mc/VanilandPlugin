@@ -1,4 +1,4 @@
-package land.vani.plugin.listener
+package land.vani.plugin.main.listener
 
 import com.destroystokyo.paper.profile.PlayerProfile
 import com.github.syari.spigot.api.event.Events
@@ -10,12 +10,12 @@ import dev.kord.core.entity.channel.TextChannel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.plus
-import land.vani.plugin.VanilandPlugin
-import land.vani.plugin.config.DiscordConfig
-import land.vani.plugin.config.MCBansConfig
-import land.vani.plugin.gateway.mcbans.MCBansGateway
-import land.vani.plugin.gateway.mcbans.model.MCBansLookupResponse
-import land.vani.plugin.permission.NOTIFY_MCBANS_LOOKUP
+import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.config.DiscordConfig
+import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.gateway.mcbans.MCBansGateway
+import land.vani.plugin.main.gateway.mcbans.model.MCBansLookupResponse
+import land.vani.plugin.main.permission.NOTIFY_MCBANS_LOOKUP
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.Component

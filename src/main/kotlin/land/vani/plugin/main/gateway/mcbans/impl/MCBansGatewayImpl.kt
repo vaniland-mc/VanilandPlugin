@@ -1,4 +1,4 @@
-package land.vani.plugin.gateway.mcbans.impl
+package land.vani.plugin.main.gateway.mcbans.impl
 
 import com.google.common.cache.Cache
 import com.google.common.cache.CacheBuilder
@@ -8,9 +8,9 @@ import io.ktor.client.request.forms.submitForm
 import io.ktor.client.statement.HttpResponse
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.Parameters
-import land.vani.plugin.config.MCBansConfig
-import land.vani.plugin.gateway.mcbans.MCBansGateway
-import land.vani.plugin.gateway.mcbans.model.MCBansLookupResponse
+import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.gateway.mcbans.MCBansGateway
+import land.vani.plugin.main.gateway.mcbans.model.MCBansLookupResponse
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 

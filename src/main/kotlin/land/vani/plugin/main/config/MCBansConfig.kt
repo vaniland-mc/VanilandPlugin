@@ -1,4 +1,4 @@
-package land.vani.plugin.config
+package land.vani.plugin.main.config
 
 import com.github.syari.spigot.api.config.CustomConfig
 import com.github.syari.spigot.api.config.type.ConfigDataType

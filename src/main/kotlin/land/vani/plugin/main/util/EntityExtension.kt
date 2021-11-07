@@ -1,4 +1,4 @@
-package land.vani.plugin.util
+package land.vani.plugin.main.util
 
 import org.bukkit.entity.Entity
 

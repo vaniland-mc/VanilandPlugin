@@ -1,4 +1,4 @@
-package land.vani.plugin.di
+package land.vani.plugin.main.di
 
 import com.github.syari.spigot.api.config.config
 import com.github.syari.spigot.api.config.def.DefaultConfigResource
@@ -11,12 +11,12 @@ import io.ktor.client.features.json.serializer.KotlinxSerializer
 import io.ktor.http.ContentType
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.json.Json
-import land.vani.plugin.VanilandPlugin
-import land.vani.plugin.config.DiscordConfig
-import land.vani.plugin.config.MCBansConfig
-import land.vani.plugin.config.WorldMenuConfig
-import land.vani.plugin.gateway.mcbans.MCBansGateway
-import land.vani.plugin.gateway.mcbans.impl.MCBansGatewayImpl
+import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.config.DiscordConfig
+import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.config.WorldMenuConfig
+import land.vani.plugin.main.gateway.mcbans.MCBansGateway
+import land.vani.plugin.main.gateway.mcbans.impl.MCBansGatewayImpl
 import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import org.koin.core.module.Module
