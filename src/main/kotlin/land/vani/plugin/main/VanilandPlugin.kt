@@ -1,4 +1,4 @@
-package land.vani.plugin
+package land.vani.plugin.main
 
 import com.github.syari.spigot.api.EasySpigotAPIOption
 import com.github.syari.spigot.api.event.events
@@ -7,14 +7,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import land.vani.plugin.command.inspectorCommand
-import land.vani.plugin.command.mcBansCommand
-import land.vani.plugin.command.vanilandCommand
-import land.vani.plugin.command.worldMenuCommand
-import land.vani.plugin.di.makeModules
-import land.vani.plugin.listener.banManager
-import land.vani.plugin.listener.group.groupIntegration
-import land.vani.plugin.listener.mcBansLookup
+import land.vani.plugin.main.command.inspectorCommand
+import land.vani.plugin.main.command.mcBansCommand
+import land.vani.plugin.main.command.vanilandCommand
+import land.vani.plugin.main.command.worldMenuCommand
+import land.vani.plugin.main.di.makeModules
+import land.vani.plugin.main.listener.banManager
+import land.vani.plugin.main.listener.group.groupIntegration
+import land.vani.plugin.main.listener.mcBansLookup
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get

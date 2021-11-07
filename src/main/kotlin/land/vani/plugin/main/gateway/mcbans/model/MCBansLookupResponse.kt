@@ -1,4 +1,4 @@
-package land.vani.plugin.gateway.mcbans.model
+package land.vani.plugin.main.gateway.mcbans.model
 
 import kotlinx.serialization.Serializable
 

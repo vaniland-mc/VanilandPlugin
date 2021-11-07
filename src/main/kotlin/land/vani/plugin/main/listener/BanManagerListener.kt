@@ -1,4 +1,4 @@
-package land.vani.plugin.listener
+package land.vani.plugin.main.listener
 
 import com.github.syari.spigot.api.event.Events
 import dev.kord.common.entity.Snowflake
@@ -9,8 +9,8 @@ import dev.kord.core.entity.channel.TextChannel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import land.vani.plugin.VanilandPlugin
-import land.vani.plugin.config.DiscordConfig
+import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.config.DiscordConfig
 import me.confuser.banmanager.bukkit.api.events.IpBannedEvent
 import me.confuser.banmanager.bukkit.api.events.IpMutedEvent
 import me.confuser.banmanager.bukkit.api.events.IpRangeBannedEvent

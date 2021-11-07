@@ -1,4 +1,4 @@
-package land.vani.plugin.permission
+package land.vani.plugin.main.permission
 
 private const val PREFIX = "vaniland"
 

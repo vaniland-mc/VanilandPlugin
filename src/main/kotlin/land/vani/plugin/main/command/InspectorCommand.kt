@@ -1,12 +1,12 @@
-package land.vani.plugin.command
+package land.vani.plugin.main.command
 
 import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument
 import de.myzelyam.api.vanish.VanishAPI
-import land.vani.plugin.VanilandPlugin
-import land.vani.plugin.command.util.getTarget
-import land.vani.plugin.command.util.requirePlayer
-import land.vani.plugin.permission.INSPECTOR_MODE
+import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.command.util.getTarget
+import land.vani.plugin.main.command.util.requirePlayer
+import land.vani.plugin.main.permission.INSPECTOR_MODE
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.Bukkit

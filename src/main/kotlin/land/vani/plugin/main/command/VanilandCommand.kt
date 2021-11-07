@@ -1,11 +1,11 @@
-package land.vani.plugin.command
+package land.vani.plugin.main.command
 
 import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument
-import land.vani.plugin.VanilandPlugin
-import land.vani.plugin.config.MCBansConfig
-import land.vani.plugin.config.WorldMenuConfig
-import land.vani.plugin.permission.VANILAND_COMMAND
+import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.config.WorldMenuConfig
+import land.vani.plugin.main.permission.VANILAND_COMMAND
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
 import org.koin.core.component.get
