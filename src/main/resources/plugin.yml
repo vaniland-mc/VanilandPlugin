@@ -1,6 +1,6 @@
 name: VanilandPlugin
 version: '${version}'
-main: land.vani.plugin.VanilandPlugin
+main: land.vani.plugin.main.VanilandPlugin
 api-version: 1.17
 authors: [ rona_tombo ]
 depend:
@@ -9,6 +9,7 @@ depend:
   - LuckPerms
   - LunaChat
   - BanManager
+  - Votifier
 
 permissions:
   vaniland.admin.mcbans:

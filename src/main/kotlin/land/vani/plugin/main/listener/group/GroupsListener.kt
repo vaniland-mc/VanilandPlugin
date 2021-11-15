@@ -8,7 +8,7 @@ import net.luckperms.api.LuckPerms
 import net.luckperms.api.node.types.InheritanceNode
 import net.luckperms.api.node.types.MetaNode
 
-fun Events.groupIntegration(luckPerms: LuckPerms) {
+fun Events.registerGroupIntegration(luckPerms: LuckPerms) {
     val groupManager = luckPerms.groupManager
     val userManager = luckPerms.userManager
 
