@@ -11,7 +11,7 @@ plugins {
 }
 
 group = "land.vani.plugin"
-version = "1.0.1"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
@@ -53,6 +53,8 @@ dependencies {
     }
     compileOnly("net.luckperms:api:5.3")
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
+    compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
+    compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")

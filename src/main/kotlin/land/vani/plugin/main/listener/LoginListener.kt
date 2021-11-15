@@ -29,7 +29,7 @@ import org.slf4j.Logger
 
 private val scope = VanilandPlugin + Job()
 
-suspend fun Events.mcBansLookup(
+suspend fun Events.registerMCBansIntegration(
     mcBansGateway: MCBansGateway,
     mcBansConfig: MCBansConfig,
     discordConfig: DiscordConfig,

@@ -25,7 +25,7 @@ private val scope = CoroutineScope(VanilandPlugin.coroutineContext + Job())
 
 private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
 
-suspend fun Events.banManager(
+suspend fun Events.registerBanManagerIntegration(
     guild: Guild,
     config: DiscordConfig,
 ) {
