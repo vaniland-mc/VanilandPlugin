@@ -2,7 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.5.31"
+    kotlin("jvm") version "1.6.0"
     kotlin("plugin.serialization") version "1.6.0"
 
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
