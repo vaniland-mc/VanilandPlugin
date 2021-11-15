@@ -12,9 +12,10 @@ import land.vani.plugin.main.command.mcBansCommand
 import land.vani.plugin.main.command.vanilandCommand
 import land.vani.plugin.main.command.worldMenuCommand
 import land.vani.plugin.main.di.makeModules
-import land.vani.plugin.main.listener.banManager
-import land.vani.plugin.main.listener.group.groupIntegration
-import land.vani.plugin.main.listener.mcBansLookup
+import land.vani.plugin.main.listener.group.registerGroupIntegration
+import land.vani.plugin.main.listener.registerBanManagerIntegration
+import land.vani.plugin.main.listener.registerMCBansIntegration
+import land.vani.plugin.main.listener.registerVoteListener
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -46,11 +47,10 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
 
     private fun registerFeatures() {
         events {
-            runBlocking {
-                mcBansLookup(get(), get(), get(), get(), get())
-                groupIntegration(get())
-                banManager(get(), get())
-            }
+            launch { registerMCBansIntegration(get(), get(), get(), get(), get()) }
+            launch { registerBanManagerIntegration(get(), get()) }
+            registerGroupIntegration(get())
+            registerVoteListener(get())
         }
 
         inspectorCommand()

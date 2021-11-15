@@ -14,6 +14,7 @@ import kotlinx.serialization.json.Json
 import land.vani.plugin.main.VanilandPlugin
 import land.vani.plugin.main.config.DiscordConfig
 import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.config.VoteConfig
 import land.vani.plugin.main.config.WorldMenuConfig
 import land.vani.plugin.main.gateway.mcbans.MCBansGateway
 import land.vani.plugin.main.gateway.mcbans.impl.MCBansGatewayImpl
@@ -40,6 +41,12 @@ private val configsModule = module {
         val config = plugin.config(Bukkit.getConsoleSender(), "discord.yml")
 
         DiscordConfig(config)
+    }
+    single {
+        val plugin = get<VanilandPlugin>()
+        val config = plugin.config(Bukkit.getConsoleSender(), "vote.yml", DefaultConfigResource(plugin, "vote.yml"))
+
+        VoteConfig(config)
     }
 }
 
