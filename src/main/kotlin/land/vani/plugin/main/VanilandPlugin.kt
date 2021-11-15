@@ -14,6 +14,7 @@ import land.vani.plugin.main.command.worldMenuCommand
 import land.vani.plugin.main.di.makeModules
 import land.vani.plugin.main.listener.group.registerGroupIntegration
 import land.vani.plugin.main.listener.registerBanManagerIntegration
+import land.vani.plugin.main.listener.registerExplosionListener
 import land.vani.plugin.main.listener.registerMCBansIntegration
 import land.vani.plugin.main.listener.registerVoteListener
 import org.bukkit.plugin.java.JavaPlugin
@@ -51,6 +52,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
             launch { registerBanManagerIntegration(get(), get()) }
             registerGroupIntegration(get())
             registerVoteListener(get())
+            registerExplosionListener()
         }
 
         inspectorCommand()
