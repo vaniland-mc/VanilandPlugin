@@ -2,7 +2,6 @@ package land.vani.plugin.main.command
 
 import com.github.syari.spigot.api.command.CommandArgument
 import com.github.syari.spigot.api.command.command
-import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument
 import com.github.syari.spigot.api.event.events
 import com.github.syari.spigot.api.inventory.inventory
 import land.vani.plugin.main.VanilandPlugin
@@ -15,7 +14,6 @@ import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
-import org.bukkit.Bukkit
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
@@ -29,21 +27,6 @@ private val mobSelection = mutableMapOf<UUID, MutableSet<Entity>>()
 fun VanilandPlugin.worldMenuCommand() {
     command("worldMenu") {
         permission = TELEPORT_WORLD_MENU
-
-        tab {
-            argument {
-                addAll("open", "mob", "setMobSpawn")
-            }
-            argument("open") {
-                addAll(Bukkit.getOnlinePlayers().map { it.name })
-            }
-            argument("mob") {
-                addAll("select", "cancel")
-            }
-            argument("mob *") {
-                addAll(Bukkit.getOnlinePlayers().map { it.name })
-            }
-        }
 
         execute {
             val config = get<WorldMenuConfig>()
@@ -68,11 +51,21 @@ fun VanilandPlugin.worldMenuCommand() {
     registerEventListener()
 }
 
+// /worldMenu open <presetName> <playerName>
 private fun executeOpenCommand(sender: CommandSender, args: CommandArgument, config: WorldMenuConfig) {
-    val target = getSenderOrTarget(sender, args, 1) ?: return
+    val target = getSenderOrTarget(sender, args, 2) ?: return
+    val presetName = args.lowerOrNull(1) ?: run {
+        target.sendMessage("プリセットが指定されていません")
+        return
+    }
 
-    inventory("移動するワールドを選択してください", line = 5, "land.vani.plugin.menu.world") {
-        config.worlds.forEach { worldMenuDetails ->
+    val preset = config.presets[presetName] ?: run {
+        target.sendMessage("プリセットが見つかりませんでした")
+        return
+    }
+
+    inventory("移動先を選択してください", line = 5, "land.vani.plugin.menu.world") {
+        preset.forEach { worldMenuDetails ->
             item(worldMenuDetails.slot, worldMenuDetails.itemStack) {
                 onClick {
                     target.teleport(worldMenuDetails.teleportLocation)
@@ -85,6 +78,7 @@ private fun executeOpenCommand(sender: CommandSender, args: CommandArgument, con
     }.open(target)
 }
 
+// /worldMenu mob <command> <playerName>
 private fun executeMobCommand(sender: CommandSender, args: CommandArgument) {
     val target = getSenderOrTarget(sender, args, 2) ?: return
 
