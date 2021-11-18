@@ -18,6 +18,7 @@ import land.vani.plugin.main.listener.registerBanManagerIntegration
 import land.vani.plugin.main.listener.registerDisableWitherBlockBreak
 import land.vani.plugin.main.listener.registerExplosionListener
 import land.vani.plugin.main.listener.registerMCBansIntegration
+import land.vani.plugin.main.listener.registerNewbieListener
 import land.vani.plugin.main.listener.registerVoteListener
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
@@ -56,6 +57,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
             registerVoteListener(get())
             registerExplosionListener()
             registerDisableWitherBlockBreak()
+            registerNewbieListener()
         }
 
         inspectorCommand()
