@@ -15,6 +15,7 @@ import land.vani.plugin.main.command.worldMenuCommand
 import land.vani.plugin.main.di.makeModules
 import land.vani.plugin.main.listener.group.registerGroupIntegration
 import land.vani.plugin.main.listener.registerBanManagerIntegration
+import land.vani.plugin.main.listener.registerDisableWitherBlockBreak
 import land.vani.plugin.main.listener.registerExplosionListener
 import land.vani.plugin.main.listener.registerMCBansIntegration
 import land.vani.plugin.main.listener.registerVoteListener
@@ -54,6 +55,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
             registerGroupIntegration(get())
             registerVoteListener(get())
             registerExplosionListener()
+            registerDisableWitherBlockBreak()
         }
 
         inspectorCommand()
