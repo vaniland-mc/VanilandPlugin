@@ -10,3 +10,5 @@ const val MCBANS_IGNORE_COMMAND = "$PREFIX.admin.mcbans.ignore"
 const val INSPECTOR_MODE = "$PREFIX.admin.inspector"
 
 const val TELEPORT_WORLD_MENU = "$PREFIX.admin.menu.world"
+
+const val OP_COMMAND = "$PREFIX.admin.op"
