@@ -64,6 +64,7 @@ hs_err_pid*
 .idea/**/dbnavigator.xml
 
 .idea/git_toolbox_prj.xml
+.idea/detekt.xml
 
 # Gradle
 .idea/**/gradle.xml
