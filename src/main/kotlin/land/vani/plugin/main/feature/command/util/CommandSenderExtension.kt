@@ -1,4 +1,4 @@
-package land.vani.plugin.main.command.util
+package land.vani.plugin.main.feature.command.util
 
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor

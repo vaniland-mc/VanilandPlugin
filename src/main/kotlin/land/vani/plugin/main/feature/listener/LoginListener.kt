@@ -1,4 +1,4 @@
-package land.vani.plugin.main.listener
+package land.vani.plugin.main.feature.listener
 
 import com.destroystokyo.paper.profile.PlayerProfile
 import com.github.syari.spigot.api.event.Events

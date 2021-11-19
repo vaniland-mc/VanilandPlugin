@@ -1,4 +1,4 @@
-package land.vani.plugin.main.listener
+package land.vani.plugin.main.feature.listener
 
 import com.github.syari.spigot.api.event.Events
 import com.github.syari.spigot.api.item.customModelData

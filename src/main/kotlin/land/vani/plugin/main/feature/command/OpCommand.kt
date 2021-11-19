@@ -1,8 +1,8 @@
-package land.vani.plugin.main.command
+package land.vani.plugin.main.feature.command
 
 import com.github.syari.spigot.api.command.command
 import land.vani.plugin.main.VanilandPlugin
-import land.vani.plugin.main.command.util.getTarget
+import land.vani.plugin.main.feature.command.util.getTarget
 import land.vani.plugin.main.permission.OP_COMMAND
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
