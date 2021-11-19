@@ -20,6 +20,7 @@ import land.vani.plugin.main.feature.listener.registerGroupIntegration
 import land.vani.plugin.main.feature.listener.registerMCBansIntegration
 import land.vani.plugin.main.feature.listener.registerNewbieListener
 import land.vani.plugin.main.feature.listener.registerVoteListener
+import land.vani.plugin.main.feature.timer.registerAutoMessage
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -65,6 +66,8 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
         vanilandCommand()
         mcBansCommand(get())
         opCommand()
+
+        registerAutoMessage()
     }
 
     private fun startKord() {
