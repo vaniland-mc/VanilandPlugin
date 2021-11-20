@@ -19,7 +19,6 @@ private val MESSAGES = generateSequence {
         PREFIX + text {
             content("公式ホームページ")
             color(NamedTextColor.GOLD)
-            decorate()
             hoverEvent(text {
                 content("クリックで公式ホームページを開く")
                 color(NamedTextColor.GRAY)
@@ -33,7 +32,6 @@ private val MESSAGES = generateSequence {
         PREFIX + text {
             content("サーバーリストで投票をお願いします!\n")
             color(NamedTextColor.GOLD)
-            decorate()
         } + text {
             content("monocraftはこちら")
             color(NamedTextColor.AQUA)
@@ -42,6 +40,46 @@ private val MESSAGES = generateSequence {
                 color(NamedTextColor.GRAY)
             })
             clickEvent(ClickEvent.openUrl("https://monocraft.net/servers/ZhtDlW4bqkRvMzOyxfA6/vote"))
+        },
+
+        PREFIX + text {
+            content("迷子になったときは")
+            color(NamedTextColor.GOLD)
+        } + text {
+            content("Dynmap")
+            color(NamedTextColor.AQUA)
+            hoverEvent(text {
+                content("クリックでDynmapを開く")
+                color(NamedTextColor.GRAY)
+            })
+            clickEvent(ClickEvent.openUrl("https://maps.vani.land"))
+        },
+
+        PREFIX + text {
+            content("バニランドには")
+            color(NamedTextColor.GOLD)
+        } + text {
+            content("公式Discordコミュニティ")
+            color(NamedTextColor.AQUA)
+            hoverEvent(text {
+                content("クリックでDiscordの招待ページを表示")
+                color(NamedTextColor.GRAY)
+            })
+            clickEvent(ClickEvent.openUrl("https://discord.gg/gGhPyDQpFN"))
+        } + text {
+            content("があります!")
+            color(NamedTextColor.GOLD)
+        },
+
+        PREFIX + text {
+            content("注意喚起\n")
+            color(NamedTextColor.RED)
+        } + text {
+            content("X-Rayの使用や荒らし行為は処罰対象です\n")
+        } + text {
+            content("また、公共植林場や畑を利用したあと植え直しをしないブルドーザー行為も荒らしとみなされる場合があります\n")
+        } + text {
+            content("みなさんが気持ちよくプレイできるよう協力をおねがいします")
         }
     )
 }.flatten()
