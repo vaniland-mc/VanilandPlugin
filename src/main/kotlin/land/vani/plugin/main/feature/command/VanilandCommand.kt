@@ -1,4 +1,4 @@
-package land.vani.plugin.main.command
+package land.vani.plugin.main.feature.command
 
 import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument

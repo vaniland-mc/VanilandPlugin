@@ -7,19 +7,20 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import land.vani.plugin.main.command.inspectorCommand
-import land.vani.plugin.main.command.mcBansCommand
-import land.vani.plugin.main.command.opCommand
-import land.vani.plugin.main.command.vanilandCommand
-import land.vani.plugin.main.command.worldMenuCommand
 import land.vani.plugin.main.di.makeModules
-import land.vani.plugin.main.listener.group.registerGroupIntegration
-import land.vani.plugin.main.listener.registerBanManagerIntegration
-import land.vani.plugin.main.listener.registerDisableWitherBlockBreak
-import land.vani.plugin.main.listener.registerExplosionListener
-import land.vani.plugin.main.listener.registerMCBansIntegration
-import land.vani.plugin.main.listener.registerNewbieListener
-import land.vani.plugin.main.listener.registerVoteListener
+import land.vani.plugin.main.feature.command.inspectorCommand
+import land.vani.plugin.main.feature.command.mcBansCommand
+import land.vani.plugin.main.feature.command.opCommand
+import land.vani.plugin.main.feature.command.vanilandCommand
+import land.vani.plugin.main.feature.command.worldMenuCommand
+import land.vani.plugin.main.feature.listener.registerBanManagerIntegration
+import land.vani.plugin.main.feature.listener.registerDisableWitherBlockBreak
+import land.vani.plugin.main.feature.listener.registerExplosionListener
+import land.vani.plugin.main.feature.listener.registerGroupIntegration
+import land.vani.plugin.main.feature.listener.registerMCBansIntegration
+import land.vani.plugin.main.feature.listener.registerNewbieListener
+import land.vani.plugin.main.feature.listener.registerVoteListener
+import land.vani.plugin.main.feature.timer.registerAutoMessage
 import org.bukkit.plugin.java.JavaPlugin
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
@@ -65,6 +66,8 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
         vanilandCommand()
         mcBansCommand(get())
         opCommand()
+
+        registerAutoMessage()
     }
 
     private fun startKord() {

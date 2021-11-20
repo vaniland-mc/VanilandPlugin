@@ -1,10 +1,10 @@
-package land.vani.plugin.main.command
+package land.vani.plugin.main.feature.command
 
 import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argument
 import land.vani.plugin.main.VanilandPlugin
-import land.vani.plugin.main.command.util.getTarget
 import land.vani.plugin.main.config.MCBansConfig
+import land.vani.plugin.main.feature.command.util.getTarget
 import land.vani.plugin.main.permission.MCBANS_IGNORE_COMMAND
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor

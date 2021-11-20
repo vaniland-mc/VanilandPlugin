@@ -1,13 +1,13 @@
-package land.vani.plugin.main.command
+package land.vani.plugin.main.feature.command
 
 import com.github.syari.spigot.api.command.CommandArgument
 import com.github.syari.spigot.api.command.command
 import com.github.syari.spigot.api.event.events
 import com.github.syari.spigot.api.inventory.inventory
 import land.vani.plugin.main.VanilandPlugin
-import land.vani.plugin.main.command.util.getSenderOrTarget
-import land.vani.plugin.main.command.util.unknownCommand
 import land.vani.plugin.main.config.WorldMenuConfig
+import land.vani.plugin.main.feature.command.util.getSenderOrTarget
+import land.vani.plugin.main.feature.command.util.unknownCommand
 import land.vani.plugin.main.permission.TELEPORT_WORLD_MENU
 import land.vani.plugin.main.util.displayName
 import net.kyori.adventure.extra.kotlin.plus
