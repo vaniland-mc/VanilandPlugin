@@ -84,7 +84,7 @@ private val MESSAGES = generateSequence {
     )
 }.flatten()
 
-private const val PERIOD = 1 * 60 * 20L
+private const val PERIOD = 5 * 60 * 20L
 
 fun VanilandPlugin.registerAutoMessage() {
     val iterator = MESSAGES.iterator()
