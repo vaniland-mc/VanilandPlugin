@@ -4,5 +4,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.Date
 
+private const val JST_OFFSET = 9
+
 fun LocalDateTime.toDate(): Date =
-    Date.from(toInstant(ZoneOffset.of("Asia/Tokyo")))
+    Date.from(toInstant(ZoneOffset.ofHours(JST_OFFSET)))
