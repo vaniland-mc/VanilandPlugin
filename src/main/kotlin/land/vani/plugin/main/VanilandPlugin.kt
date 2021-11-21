@@ -13,6 +13,7 @@ import land.vani.plugin.main.feature.command.mcBansCommand
 import land.vani.plugin.main.feature.command.opCommand
 import land.vani.plugin.main.feature.command.vanilandCommand
 import land.vani.plugin.main.feature.command.worldMenuCommand
+import land.vani.plugin.main.feature.listener.registerAdvancementListenr
 import land.vani.plugin.main.feature.listener.registerBanManagerIntegration
 import land.vani.plugin.main.feature.listener.registerDisableWitherBlockBreak
 import land.vani.plugin.main.feature.listener.registerExplosionListener
@@ -59,6 +60,7 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
             registerExplosionListener()
             registerDisableWitherBlockBreak()
             registerNewbieListener()
+            registerAdvancementListenr()
         }
 
         inspectorCommand()
