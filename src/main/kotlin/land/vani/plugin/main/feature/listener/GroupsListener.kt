@@ -4,6 +4,7 @@ import com.github.syari.spigot.api.event.Events
 import com.github.ucchyocean.lc3.bukkit.event.LunaChatBukkitChannelCreateEvent
 import com.github.ucchyocean.lc3.bukkit.event.LunaChatBukkitChannelMemberChangedEvent
 import com.github.ucchyocean.lc3.bukkit.event.LunaChatBukkitChannelRemoveEvent
+import com.github.ucchyocean.lc3.channel.Channel
 import net.luckperms.api.LuckPerms
 import net.luckperms.api.node.types.InheritanceNode
 import net.luckperms.api.node.types.MetaNode
@@ -18,6 +19,8 @@ fun Events.registerGroupIntegration(luckPerms: LuckPerms) {
             event.member.sendMessage("&c同名のチャンネルが既に存在します")
             return@event
         }
+        // is personal chat
+        if (event.channelName.contains(">")) return@event
         groupManager.createAndLoadGroup(event.channelName)
         groupManager.modifyGroup(event.channelName) { group ->
             group.data().add(MetaNode.builder("receive-mail", "true").build())
@@ -26,6 +29,7 @@ fun Events.registerGroupIntegration(luckPerms: LuckPerms) {
 
     event<LunaChatBukkitChannelRemoveEvent> { event ->
         val group = groupManager.getGroup(event.channelName) ?: return@event
+        if (!checkIsNormalChannel(event.channel)) return@event
 
         if (group.cachedData.metaData.getMetaValue("admin-managed") == "true") return@event
         groupManager.deleteGroup(group)
@@ -35,6 +39,7 @@ fun Events.registerGroupIntegration(luckPerms: LuckPerms) {
         val before = event.membersBefore
         val after = event.membersAfter
         val group = groupManager.getGroup(event.channelName) ?: return@event
+        if (!checkIsNormalChannel(event.channel)) return@event
 
         if (before.size < after.size) {
             // メンバー追加
@@ -52,4 +57,8 @@ fun Events.registerGroupIntegration(luckPerms: LuckPerms) {
             }
         }
     }
+}
+
+private fun checkIsNormalChannel(channel: Channel): Boolean = channel.run {
+    isPersonalChat || isForceJoinChannel || isGlobalChannel || isBroadcastChannel || isWorldRange
 }
