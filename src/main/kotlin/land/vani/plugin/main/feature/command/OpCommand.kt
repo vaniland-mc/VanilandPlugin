@@ -2,6 +2,7 @@ package land.vani.plugin.main.feature.command
 
 import com.github.syari.spigot.api.command.command
 import land.vani.plugin.main.VanilandPlugin
+import land.vani.plugin.main.config.OpInventoryConfig
 import land.vani.plugin.main.feature.command.util.getTarget
 import land.vani.plugin.main.permission.OP_COMMAND
 import net.kyori.adventure.extra.kotlin.plus
@@ -19,6 +20,8 @@ fun VanilandPlugin.opCommand() {
     val luckPerms = get<LuckPerms>()
     val userManager = luckPerms.userManager
 
+    val config = get<OpInventoryConfig>()
+
     command("giveop") {
         permission = OP_COMMAND
         execute {
@@ -27,7 +30,7 @@ fun VanilandPlugin.opCommand() {
             } else {
                 sender as Player
             }
-            onOpCommand(userManager, target)
+            onOpCommand(config, userManager, target)
         }
     }
     command("removeop") {
@@ -38,12 +41,12 @@ fun VanilandPlugin.opCommand() {
             } else {
                 sender as Player
             }
-            onDeopCommand(userManager, target)
+            onDeopCommand(config, userManager, target)
         }
     }
 }
 
-private fun onOpCommand(userManager: UserManager, target: Player) {
+private fun onOpCommand(config: OpInventoryConfig, userManager: UserManager, target: Player) {
     if (target.isOp) {
         target.sendMessage(text {
             content("既にOP権限が付与されています")
@@ -55,6 +58,12 @@ private fun onOpCommand(userManager: UserManager, target: Player) {
     userManager.modifyUser(target.uniqueId) { user ->
         user.data().add(InheritanceNode.builder(OP_PERMS_GROUP).build())
     }
+
+    val currentInventory = target.inventory
+    config.setPlayerInventory(target, currentInventory)
+    val playerInventory = config.getPlayerInventory(target).orEmpty()
+    target.inventory.contents = playerInventory
+
     target.sendMessage(text {
         content(target.name)
         color(NamedTextColor.AQUA)
@@ -64,7 +73,7 @@ private fun onOpCommand(userManager: UserManager, target: Player) {
     })
 }
 
-private fun onDeopCommand(userManager: UserManager, target: Player) {
+private fun onDeopCommand(config: OpInventoryConfig, userManager: UserManager, target: Player) {
     if (target.isOp) {
         target.sendMessage(text {
             content("OP権限が付与されていません")
@@ -76,6 +85,12 @@ private fun onDeopCommand(userManager: UserManager, target: Player) {
     userManager.modifyUser(target.uniqueId) { user ->
         user.data().remove(InheritanceNode.builder(OP_PERMS_GROUP).build())
     }
+
+    val currentInventory = target.inventory
+    config.setOpInventory(target, currentInventory)
+    val opInventory = config.getOpInventory(target).orEmpty()
+    target.inventory.contents = opInventory
+
     target.sendMessage(text {
         content(target.name)
         color(NamedTextColor.AQUA)
