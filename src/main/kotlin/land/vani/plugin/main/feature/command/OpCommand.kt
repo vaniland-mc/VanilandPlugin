@@ -61,8 +61,7 @@ private fun onOpCommand(config: OpInventoryConfig, userManager: UserManager, tar
 
     val currentInventory = target.inventory
     config.setPlayerInventory(target, currentInventory)
-    val playerInventory = config.getPlayerInventory(target).orEmpty()
-    target.inventory.contents = playerInventory
+    config.applyOpInventoryToPlayer(target)
 
     target.sendMessage(text {
         content(target.name)
@@ -74,7 +73,7 @@ private fun onOpCommand(config: OpInventoryConfig, userManager: UserManager, tar
 }
 
 private fun onDeopCommand(config: OpInventoryConfig, userManager: UserManager, target: Player) {
-    if (target.isOp) {
+    if (!target.isOp) {
         target.sendMessage(text {
             content("OP権限が付与されていません")
             color(NamedTextColor.RED)
@@ -88,8 +87,7 @@ private fun onDeopCommand(config: OpInventoryConfig, userManager: UserManager, t
 
     val currentInventory = target.inventory
     config.setOpInventory(target, currentInventory)
-    val opInventory = config.getOpInventory(target).orEmpty()
-    target.inventory.contents = opInventory
+    config.applyPlayerInventoryToPlayer(target)
 
     target.sendMessage(text {
         content(target.name)
