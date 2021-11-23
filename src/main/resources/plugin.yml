@@ -10,6 +10,7 @@ depend:
   - LunaChat
   - BanManager
   - Votifier
+  - MultiverseCore
 
 permissions:
   vaniland.admin.mcbans:
