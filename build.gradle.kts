@@ -27,6 +27,10 @@ repositories {
         name = "BanManager repo"
         setUrl("https://ci.frostcast.net/plugin/repository/everything")
     }
+    maven {
+        name = "OnARandomBox"
+        setUrl("https://repo.onarandombox.com/content/groups/public/")
+    }
     maven("https://jitpack.io")
 }
 
@@ -55,6 +59,8 @@ dependencies {
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
+
+    compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.6.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2")
