@@ -5,6 +5,7 @@ import com.github.syari.spigot.api.command.tab.CommandTabArgument.Companion.argu
 import land.vani.plugin.main.VanilandPlugin
 import land.vani.plugin.main.config.MCBansConfig
 import land.vani.plugin.main.config.OpInventoryConfig
+import land.vani.plugin.main.config.ResetWorldConfig
 import land.vani.plugin.main.config.VoteConfig
 import land.vani.plugin.main.config.WorldMenuConfig
 import land.vani.plugin.main.permission.VANILAND_COMMAND
@@ -27,11 +28,13 @@ fun VanilandPlugin.vanilandCommand() {
                     val worldMenuConfig = get<WorldMenuConfig>()
                     val voteConfig = get<VoteConfig>()
                     val opInventoryConfig = get<OpInventoryConfig>()
+                    val resetWorldConfig = get<ResetWorldConfig>()
 
                     mcBansConfig.reload()
                     worldMenuConfig.reload()
                     voteConfig.reload()
                     opInventoryConfig.reload()
+                    resetWorldConfig.reload()
 
                     sender.sendMessage(
                         text {
