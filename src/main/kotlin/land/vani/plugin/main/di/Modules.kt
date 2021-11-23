@@ -2,6 +2,7 @@ package land.vani.plugin.main.di
 
 import com.github.syari.spigot.api.config.config
 import com.github.syari.spigot.api.config.def.DefaultConfigResource
+import com.onarandombox.MultiverseCore.MultiverseCore
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
 import io.ktor.client.HttpClient
@@ -99,6 +100,9 @@ private val gatewaysModules = module {
 private val dependPluginsModule = module {
     single {
         Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)!!.provider
+    }
+    single {
+        Bukkit.getServer().pluginManager.getPlugin("MultiverseCore") as MultiverseCore
     }
 }
 
