@@ -168,6 +168,7 @@ private val TELEPORTABLE_ENTITY_TYPES = setOf(
     EntityType.COW,
     EntityType.DONKEY,
     EntityType.FOX,
+    EntityType.GOAT,
     EntityType.HORSE,
     EntityType.LLAMA,
     EntityType.MULE,
