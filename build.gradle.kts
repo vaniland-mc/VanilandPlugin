@@ -72,7 +72,7 @@ dependencies {
     implementation("io.ktor:ktor-client-serialization:1.6.6")
     implementation("io.ktor:ktor-client-logging:1.6.6")
 
-    implementation("dev.kord:kord-core:0.8.0-M7")
+    implementation("dev.kord:kord-core:0.8.0-M8")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.0.0.817-SNAPSHOT")
     testImplementation("io.kotest:kotest-assertions-core:5.0.0.817-SNAPSHOT")
