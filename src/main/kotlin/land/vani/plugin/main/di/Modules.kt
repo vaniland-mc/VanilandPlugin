@@ -102,7 +102,7 @@ private val dependPluginsModule = module {
         Bukkit.getServicesManager().getRegistration(LuckPerms::class.java)!!.provider
     }
     single {
-        Bukkit.getServer().pluginManager.getPlugin("MultiverseCore") as MultiverseCore
+        Bukkit.getServer().pluginManager.getPlugin("Multiverse-Core") as MultiverseCore
     }
 }
 
