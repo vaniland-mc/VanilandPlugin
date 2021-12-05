@@ -24,7 +24,7 @@ class ResetWorldConfig(
         inner.get("teleported.$uuid", ConfigDataType.Boolean, notFoundError = false) ?: false
 
     fun setTeleported(uuid: UUID, teleported: Boolean) =
-        inner.set("teleported.$uuid", ConfigDataType.Boolean, teleported)
+        inner.set("teleported.$uuid", ConfigDataType.Boolean, teleported, true)
 
     fun reload() = inner.reload()
 }
