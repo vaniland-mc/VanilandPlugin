@@ -3,6 +3,7 @@ package land.vani.plugin.main.feature.listener
 import com.github.syari.spigot.api.event.Events
 import com.github.syari.spigot.api.item.customModelData
 import com.github.syari.spigot.api.item.itemStack
+import com.github.syari.spigot.api.sound.playSound
 import com.vexsoftware.votifier.model.VotifierEvent
 import land.vani.plugin.main.config.VoteConfig
 import land.vani.plugin.main.util.giveItemOrDrop
@@ -12,6 +13,7 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerJoinEvent
@@ -70,6 +72,7 @@ private fun giveBonusOnOnline(player: Player, serviceName: String?) {
             decoration(TextDecoration.BOLD, false)
         })
     }
+    player.playSound(Sound.ENTITY_PLAYER_LEVELUP)
 }
 
 private fun giveBonus(player: Player, amount: Int) {
