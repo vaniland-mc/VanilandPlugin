@@ -68,8 +68,8 @@ dependencies {
     implementation("io.insert-koin:koin-core:3.1.4")
 
     implementation("io.ktor:ktor-client-core:1.6.7")
-    implementation("io.ktor:ktor-client-cio:1.6.6")
-    implementation("io.ktor:ktor-client-serialization:1.6.6")
+    implementation("io.ktor:ktor-client-cio:1.6.7")
+    implementation("io.ktor:ktor-client-serialization:1.6.7")
     implementation("io.ktor:ktor-client-logging:1.6.7")
 
     implementation("dev.kord:kord-core:0.8.0-M8")
