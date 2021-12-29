@@ -7,7 +7,7 @@ plugins {
 
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
 
-    id("com.github.johnrengelman.shadow") version "7.1.1"
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "land.vani.plugin"
