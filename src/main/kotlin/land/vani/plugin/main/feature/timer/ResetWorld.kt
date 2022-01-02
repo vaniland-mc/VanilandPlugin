@@ -10,16 +10,15 @@ import org.bukkit.event.player.PlayerJoinEvent
 import org.koin.core.component.get
 import java.time.LocalDate
 
-fun VanilandPlugin.registerResetWorld() {
+fun VanilandPlugin.resetWorld() {
     val config = get<ResetWorldConfig>()
     val mvCore = get<MultiverseCore>()
 
     if (LocalDate.now().dayOfMonth != 1) {
         if (config.regenerated) {
             config.regenerated = false
-        } else {
-            return
         }
+        return
     }
     if (config.regenerated) return
 
