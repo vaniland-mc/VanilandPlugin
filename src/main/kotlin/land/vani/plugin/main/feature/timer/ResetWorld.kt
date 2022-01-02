@@ -38,17 +38,16 @@ fun Events.registerResetWorldSafetySpawn(
 ) {
     event<PlayerJoinEvent> { event ->
         val player = event.player
-        if (player.world.name !in config.resetWorlds) {
-            return@event
-        }
         if (config.isTeleported(player.uniqueId)) {
             return@event
         }
-        player.teleport(config.spawnLocation)
-        player.sendMessage(text {
-            content("リセットワールドが再生成されたため、ロビーにテレポートしました")
-            color(NamedTextColor.YELLOW)
-        })
+        if (player.world.name in config.resetWorlds) {
+            player.teleport(config.spawnLocation)
+            player.sendMessage(text {
+                content("リセットワールドが再生成されたため、ロビーにテレポートしました")
+                color(NamedTextColor.YELLOW)
+            })
+        }
         config.setTeleported(player.uniqueId, true)
     }
 }
