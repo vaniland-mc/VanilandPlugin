@@ -55,7 +55,7 @@ dependencies {
     compileOnly("com.github.ucchyocean:LunaChat:3.0.16") {
         exclude("org.bstats")
     }
-    compileOnly("net.luckperms:api:5.3")
+    compileOnly("net.luckperms:api:5.4")
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.6.0-SNAPSHOT")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
