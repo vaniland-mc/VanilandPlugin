@@ -22,7 +22,7 @@ jobs:
       - name: Build
         run: ./gradlew build -x test
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: Package
           path: build/libs
@@ -51,7 +51,7 @@ jobs:
         run: ./gradlew test
       - name: Upload test results
         if: always()
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: test-results
           path: build/test-results/test
