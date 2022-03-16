@@ -45,7 +45,7 @@ dependencies {
         exclude("net.kyori")
     }
 
-    compileOnly("com.github.LeonMangler:SuperVanish:6.2.6-4") {
+    compileOnly("com.github.LeonMangler:SuperVanish:6.2.7") {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
         exclude("net.citizensnpcs", "citizensapi")
         exclude("com.sk89q.worldguard", "worldguard-bukkit")
