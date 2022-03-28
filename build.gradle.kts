@@ -74,8 +74,8 @@ dependencies {
 
     implementation("dev.kord:kord-core:0.8.0-M12")
 
-    testImplementation("io.kotest:kotest-runner-junit5:5.2.1")
-    testImplementation("io.kotest:kotest-assertions-core:5.2.1")
+    testImplementation("io.kotest:kotest-runner-junit5:5.2.2")
+    testImplementation("io.kotest:kotest-assertions-core:5.2.2")
 }
 
 val targetJavaVersion = 16
