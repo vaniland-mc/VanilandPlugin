@@ -56,7 +56,7 @@ dependencies {
         exclude("org.bstats")
     }
     compileOnly("net.luckperms:api:5.4")
-    compileOnly("me.confuser.banmanager:BanManagerBukkit:7.7.0")
+    compileOnly("me.confuser.banmanager:BanManagerBukkit:7.8.0")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
 
