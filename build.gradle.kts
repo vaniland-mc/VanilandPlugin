@@ -41,7 +41,7 @@ dependencies {
     api("com.github.sya-ri:EasySpigotAPI:2.4.0") {
         exclude(group = "org.spigotmc", module = "spigot-api")
     }
-    implementation("net.kyori:adventure-extra-kotlin:4.10.1") {
+    implementation("net.kyori:adventure-extra-kotlin:4.11.0") {
         exclude("net.kyori")
     }
 
