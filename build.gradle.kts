@@ -82,12 +82,6 @@ java {
     }
 }
 
-detekt {
-    reports {
-        xml.enabled = true
-    }
-}
-
 tasks {
     withType<KotlinCompile> {
         kotlinOptions {
@@ -105,5 +99,8 @@ tasks {
 
     withType<Detekt> {
         jvmTarget = "$targetJavaVersion"
+        reports {
+            xml.required.set(true)
+        }
     }
 }
