@@ -5,13 +5,7 @@ import com.github.syari.spigot.api.config.def.DefaultConfigResource
 import com.onarandombox.MultiverseCore.MultiverseCore
 import dev.kord.common.entity.Snowflake
 import dev.kord.core.Kord
-import io.ktor.client.HttpClient
-import io.ktor.client.engine.cio.CIO
-import io.ktor.client.features.json.JsonFeature
-import io.ktor.client.features.json.serializer.KotlinxSerializer
-import io.ktor.http.ContentType
 import kotlinx.coroutines.runBlocking
-import kotlinx.serialization.json.Json
 import land.vani.plugin.main.VanilandPlugin
 import land.vani.plugin.main.config.DiscordConfig
 import land.vani.plugin.main.config.MCBansConfig
@@ -19,8 +13,6 @@ import land.vani.plugin.main.config.OpInventoryConfig
 import land.vani.plugin.main.config.ResetWorldConfig
 import land.vani.plugin.main.config.VoteConfig
 import land.vani.plugin.main.config.WorldMenuConfig
-import land.vani.plugin.main.gateway.mcbans.MCBansGateway
-import land.vani.plugin.main.gateway.mcbans.impl.MCBansGatewayImpl
 import net.luckperms.api.LuckPerms
 import org.bukkit.Bukkit
 import org.koin.core.module.Module
@@ -65,23 +57,7 @@ private val configsModule = module {
     }
 }
 
-private val httpClientModule = module {
-    single {
-        HttpClient(CIO) {
-            install(JsonFeature) {
-                serializer = KotlinxSerializer(
-                    Json {
-                        ignoreUnknownKeys = true
-                    }
-                )
-                acceptContentTypes = acceptContentTypes + ContentType.parse("text/html")
-            }
-        }
-    }
-}
-
 private val gatewaysModules = module {
-    single<MCBansGateway> { MCBansGatewayImpl(get(), get()) }
     single {
         val config = get<DiscordConfig>()
         runBlocking {
@@ -113,8 +89,7 @@ fun makeModules(plugin: VanilandPlugin): List<Module> {
     }
 
     return pluginModule +
-            configsModule +
-            httpClientModule +
-            gatewaysModules +
-            dependPluginsModule
+        configsModule +
+        gatewaysModules +
+        dependPluginsModule
 }

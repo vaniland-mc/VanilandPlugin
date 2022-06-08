@@ -3,7 +3,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.21"
-    kotlin("plugin.serialization") version "1.6.21"
 
     id("io.gitlab.arturbosch.detekt") version "1.18.1"
 
@@ -66,11 +65,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
     implementation("io.insert-koin:koin-core:3.2.0")
-
-    implementation("io.ktor:ktor-client-core:1.6.8")
-    implementation("io.ktor:ktor-client-cio:1.6.8")
-    implementation("io.ktor:ktor-client-serialization:1.6.8")
-    implementation("io.ktor:ktor-client-logging:1.6.8")
 
     implementation("dev.kord:kord-core:0.8.0-M12")
 
