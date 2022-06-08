@@ -16,7 +16,6 @@ import land.vani.plugin.main.feature.command.worldMenuCommand
 import land.vani.plugin.main.feature.listener.registerAdvancementListenr
 import land.vani.plugin.main.feature.listener.registerBanManagerIntegration
 import land.vani.plugin.main.feature.listener.registerGroupIntegration
-import land.vani.plugin.main.feature.listener.registerMCBansIntegration
 import land.vani.plugin.main.feature.listener.registerNewbieListener
 import land.vani.plugin.main.feature.listener.registerVoteListener
 import land.vani.plugin.main.feature.timer.registerAutoMessage
@@ -55,7 +54,6 @@ class VanilandPlugin : JavaPlugin(), KoinComponent {
 
     private fun registerFeatures() {
         events {
-            launch { registerMCBansIntegration(get(), get(), get(), get(), get()) }
             launch { registerBanManagerIntegration(get(), get()) }
             registerGroupIntegration(get())
             registerVoteListener(get())
