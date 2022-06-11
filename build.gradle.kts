@@ -16,7 +16,12 @@ repositories {
     mavenCentral()
     maven {
         name = "papermc-repo"
-        setUrl("https://papermc.io/repo/repository/maven-public/")
+        setUrl("https://repo.papermc.io/repository/maven-public/")
+        content {
+            includeGroup("io.papermc.paper")
+            includeGroup("com.mojang")
+            includeGroup("net.md-5")
+        }
     }
     maven {
         name = "sonatype"
@@ -25,10 +30,16 @@ repositories {
     maven {
         name = "BanManager repo"
         setUrl("https://ci.frostcast.net/plugin/repository/everything")
+        content {
+            includeGroup("me.confuser.banmanager.BanManagerLibs")
+        }
     }
     maven {
         name = "OnARandomBox"
         setUrl("https://repo.onarandombox.com/content/groups/public/")
+        content {
+            includeGroup("com.onarandombox.multiversecore")
+        }
     }
     maven("https://jitpack.io")
 }
@@ -36,13 +47,12 @@ repositories {
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
-    api("com.github.sya-ri:EasySpigotAPI:2.4.0") {
-        exclude(group = "org.spigotmc", module = "spigot-api")
-    }
+    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-extra-kotlin:4.11.0") {
         exclude("net.kyori")
     }
+
+    implementation("land.vani.mcorouhlin:mcorouhlin-paper:4.0.0")
 
     compileOnly("com.github.LeonMangler:SuperVanish:6.2.7") {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
@@ -72,13 +82,19 @@ dependencies {
     testImplementation("io.kotest:kotest-assertions-core:5.4.1")
 }
 
-val targetJavaVersion = 16
+val targetJavaVersion = 17
+kotlin {
+    jvmToolchain {
+        languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+        @Suppress("UnstableApiUsage")
+        vendor.set(JvmVendorSpec.GRAAL_VM)
+    }
+}
 java {
-    val javaVersion = JavaVersion.toVersion(targetJavaVersion)
-    sourceCompatibility = javaVersion
-    targetCompatibility = javaVersion
-    if (JavaVersion.current() < javaVersion) {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(targetJavaVersion))
+        @Suppress("UnstableApiUsage")
+        vendor.set(JvmVendorSpec.GRAAL_VM)
     }
 }
 
@@ -101,6 +117,7 @@ tasks {
         jvmTarget = "$targetJavaVersion"
         reports {
             xml.required.set(true)
+            sarif.required.set(true)
         }
     }
 }

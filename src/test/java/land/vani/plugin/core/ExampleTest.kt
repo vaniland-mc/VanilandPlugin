@@ -1,4 +1,4 @@
-package land.vani.plugin.main
+package land.vani.plugin.core
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.ints.shouldBeExactly
