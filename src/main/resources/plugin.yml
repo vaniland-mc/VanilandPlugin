@@ -1,9 +1,9 @@
 name: VanilandPlugin
 version: '${version}'
-main: land.vani.plugin.main.VanilandPlugin
+main: land.vani.plugin.core.VanilandPlugin
 api-version: 1.17
 authors: [ rona_tombo ]
-depend:
+loadbefore:
   - EasySpigotAPI
   - WorldGuard
   - LuckPerms
@@ -11,14 +11,3 @@ depend:
   - BanManager
   - Votifier
   - Multiverse-Core
-
-permissions:
-  vaniland.admin.mcbans:
-    default: op
-    description: Can show MCBans lookup information
-  vaniland.admin.inspector:
-    default: op
-    description: Can enable/disable inspector mode
-  vaniland.admin.tp.world:
-    default: op
-    description: Open world teleport menu
