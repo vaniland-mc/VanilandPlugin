@@ -12,6 +12,7 @@ import land.vani.plugin.core.di.startVanilandKoin
 import land.vani.plugin.core.di.stopVanilandKoin
 import land.vani.plugin.core.features.FeaturesRegistry
 import land.vani.plugin.core.features.automessage.AutoMessage
+import land.vani.plugin.core.features.newbie.Newbie
 import org.koin.core.component.inject
 
 class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
@@ -19,6 +20,7 @@ class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
         this,
         listOf(
             AutoMessage,
+            Newbie,
         )
     )
 
