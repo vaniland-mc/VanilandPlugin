@@ -13,7 +13,7 @@ import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.event.ClickEvent
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
-import kotlin.time.Duration.Companion.seconds
+import kotlin.time.Duration.Companion.minutes
 
 private val PREFIX = text {
     content("[定期]")
@@ -121,8 +121,7 @@ private val MESSAGES = generateSequence {
     )
 }.flatten()
 
-// private val PERIOD = 5.minutes
-private val PERIOD = 10.seconds
+private val PERIOD = 5.minutes
 
 object AutoMessage : Feature {
     override val key: Feature.Key = Feature.Key("autoMessage")
