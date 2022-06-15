@@ -1,4 +1,4 @@
-package land.vani.plugin.core.features.automessage
+package land.vani.plugin.core.features
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.plus
 import kotlinx.coroutines.withContext
 import land.vani.plugin.core.VanilandPlugin
-import land.vani.plugin.core.features.Feature
 import land.vani.plugin.core.timer.timerFlow
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
