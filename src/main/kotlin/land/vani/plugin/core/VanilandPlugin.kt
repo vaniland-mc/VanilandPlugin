@@ -10,10 +10,10 @@ import land.vani.plugin.core.di.VanilandCoreKoinComponent
 import land.vani.plugin.core.di.modulesWithFeatures
 import land.vani.plugin.core.di.startVanilandKoin
 import land.vani.plugin.core.di.stopVanilandKoin
+import land.vani.plugin.core.features.AutoMessage
 import land.vani.plugin.core.features.FeaturesRegistry
-import land.vani.plugin.core.features.automessage.AutoMessage
-import land.vani.plugin.core.features.newbie.Newbie
-import land.vani.plugin.core.features.vote.Vote
+import land.vani.plugin.core.features.Newbie
+import land.vani.plugin.core.features.Vote
 import org.koin.core.component.inject
 
 class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {

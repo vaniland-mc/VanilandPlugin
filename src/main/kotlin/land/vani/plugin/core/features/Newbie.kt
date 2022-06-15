@@ -1,9 +1,8 @@
-package land.vani.plugin.core.features.newbie
+package land.vani.plugin.core.features
 
 import land.vani.mcorouhlin.paper.event.on
 import land.vani.mcorouhlin.paper.item.itemStack
 import land.vani.plugin.core.VanilandPlugin
-import land.vani.plugin.core.features.Feature
 import land.vani.plugin.core.util.giveItemOrDrop
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
