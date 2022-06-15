@@ -16,4 +16,21 @@ class MainConfig(plugin: VanilandPlugin) : BukkitConfiguration<MainConfig>(plugi
                 complex.associate { "$it" to true }
             }
         )
+
+    val voteBlacklistedWorlds by value<List<String>>("voteBlacklistedWorlds")
+        .transform(
+            { worlds ->
+                worlds?.forEach { world ->
+                    if (plugin.server.getWorld(world) == null) {
+                        plugin.logger.warning("World '$world' is set in config but that world is not exists")
+                    }
+                }
+
+                worlds.orEmpty()
+            },
+            { it }
+        )
+
+    val voteBonusAwaitingPlayers by value<MutableMap<String, Int>>("voteBonusAwaitingPlayers")
+        .default(mutableMapOf())
 }

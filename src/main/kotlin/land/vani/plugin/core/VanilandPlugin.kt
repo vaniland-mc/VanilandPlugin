@@ -13,6 +13,7 @@ import land.vani.plugin.core.di.stopVanilandKoin
 import land.vani.plugin.core.features.FeaturesRegistry
 import land.vani.plugin.core.features.automessage.AutoMessage
 import land.vani.plugin.core.features.newbie.Newbie
+import land.vani.plugin.core.features.vote.Vote
 import org.koin.core.component.inject
 
 class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
@@ -21,8 +22,11 @@ class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
         listOf(
             AutoMessage,
             Newbie,
+            Vote,
         )
     )
+
+    val mainConfig by inject<MainConfig>()
 
     private suspend fun saveDefaultConfigs() = withContext(Dispatchers.IO) {
         saveResource("config.yml", false)
@@ -45,7 +49,6 @@ class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
     }
 
     override suspend fun onDisableAsync() {
-        val mainConfig by inject<MainConfig>()
         featuresRegistry.disableFeatures(mainConfig.features)
 
         cancel()
