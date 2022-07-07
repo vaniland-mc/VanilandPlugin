@@ -61,7 +61,7 @@ dependencies {
 
     compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3")
 
     implementation("io.insert-koin:koin-core:3.2.0")
