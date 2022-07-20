@@ -122,8 +122,8 @@ private val MESSAGES = generateSequence {
 
 private val PERIOD = 5.minutes
 
-object AutoMessage : Feature {
-    override val key: Feature.Key = Feature.Key("autoMessage")
+object AutoMessage : Feature<AutoMessage>() {
+    override val key: Key<AutoMessage> = Key("autoMessage")
 
     private var job: Job? = null
 

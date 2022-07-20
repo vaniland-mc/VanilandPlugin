@@ -8,12 +8,15 @@ plugins {
     id("io.gitlab.arturbosch.detekt") version "1.21.0"
 
     id("com.github.johnrengelman.shadow") version "7.1.2"
+
+    id("io.papermc.paperweight.userdev") version "1.3.7"
 }
 
 group = "land.vani.plugin"
 version = "1.1.0"
 
 repositories {
+    mavenLocal()
     mavenCentral()
     maven {
         name = "papermc-repo"
@@ -49,11 +52,15 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
     compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
+    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-extra-kotlin:4.11.0") {
         exclude("net.kyori")
     }
 
-    implementation("land.vani.mcorouhlin:mcorouhlin-paper:4.0.0")
+    implementation("land.vani.mcorouhlin:mcorouhlin-api:5.0.0")
+    implementation("land.vani.mcorouhlin:mcorouhlin-paper:5.0.0")
+//    implementation("land.vani.mcorouhlin:mcorouhlin-api:SNAPSHOT")
+//    implementation("land.vani.mcorouhlin:mcorouhlin-paper:SNAPSHOT")
 
     compileOnly("com.github.LeonMangler:SuperVanish:6.2.7") {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
@@ -120,5 +127,9 @@ tasks {
             xml.required.set(true)
             sarif.required.set(true)
         }
+    }
+
+    assemble {
+        dependsOn("reobfJar")
     }
 }
