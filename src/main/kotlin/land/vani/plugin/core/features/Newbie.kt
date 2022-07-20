@@ -15,8 +15,8 @@ import org.bukkit.event.player.PlayerJoinEvent
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
-object Newbie : Feature {
-    override val key: Feature.Key = Feature.Key("newbie")
+object Newbie : Feature<Newbie>() {
+    override val key: Key<Newbie> = Key("newbie")
 
     private const val BREAD_AMOUNT = 32
 

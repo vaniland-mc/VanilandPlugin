@@ -24,14 +24,14 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 import org.bukkit.Sound as BukkitSound
 
-object Vote : Feature {
-    override val key: Feature.Key = Feature.Key("vote")
+object Vote : Feature<Vote>() {
+    override val key: Key<Vote> = Key("vote")
 
     override suspend fun onEnable(plugin: VanilandPlugin) = plugin.events {
         on<VotifierEvent> { event ->
             val player = plugin.server.getPlayer(event.vote.username)
 
-            if (player == null || player.world.name in plugin.mainConfig.voteBlacklistedWorlds) {
+            if (player == null || player.world in plugin.mainConfig.voteBlacklistedWorlds) {
                 with(plugin.mainConfig) {
                     voteBonusAwaitingPlayers[event.vote.username.lowercase()] =
                         (voteBonusAwaitingPlayers[event.vote.username.lowercase()] ?: 0) + 1
@@ -44,7 +44,7 @@ object Vote : Feature {
             giveBonus(plugin, event.player)
         }
         on<PlayerChangedWorldEvent> { event ->
-            if (event.player.world.name in plugin.mainConfig.voteBlacklistedWorlds) {
+            if (event.player.world in plugin.mainConfig.voteBlacklistedWorlds) {
                 return@on
             }
             giveBonus(plugin, event.player)

@@ -3,8 +3,8 @@ version: '${version}'
 main: land.vani.plugin.core.VanilandPlugin
 api-version: 1.17
 authors: [ rona_tombo ]
+load: STARTUP
 loadbefore:
-  - EasySpigotAPI
   - WorldGuard
   - LuckPerms
   - LunaChat

@@ -118,3 +118,4 @@ fabric.properties
 
 # Project specific
 !.github/actions/build
+.idea/remote-targets.xml
