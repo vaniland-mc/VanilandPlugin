@@ -3,6 +3,7 @@ package land.vani.plugin.core.di
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import land.vani.plugin.core.VanilandPlugin
+import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
 import org.koin.dsl.module
@@ -20,6 +21,13 @@ fun coreModule(plugin: VanilandPlugin, mainConfig: MainConfig) = module {
 fun configModule(plugin: VanilandPlugin) = module {
     single {
         SafetyLoginsConfig(plugin).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
+        AutoMessagesConfig(plugin).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }
