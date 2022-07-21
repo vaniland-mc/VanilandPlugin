@@ -1,0 +1,6 @@
+features:
+  autoMessage: true
+  newbie: true
+  safetyLogin: true
+  vanilandCommand: true
+  commands: true

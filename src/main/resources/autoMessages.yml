@@ -1,0 +1,4 @@
+period: 5 # minutes
+prefix: "<dark_aqua><bold>[定期]</bold></dark_aqua>"
+messages:
+  - "<gold><click:open_url:https://vani.land><hover:show_text:'<gray>クリックで公式ホームページを開く</gray>'>公式ホームページ</hover></click></gold><gray>でルールを確認してください!</gray>"

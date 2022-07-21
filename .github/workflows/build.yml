@@ -1,0 +1,28 @@
+name: Build
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  detekt:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: vaniland-mc/actions/detekt@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          report-xml-path: build/reports/detekt/detekt.xml
+          report-sarif-path: build/reports/detekt/detekt.sarif
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/build
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
