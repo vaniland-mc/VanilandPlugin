@@ -1,7 +1,7 @@
 name: VanilandPlugin
 version: '${version}'
 main: land.vani.plugin.core.VanilandPlugin
-api-version: 1.17
+api-version: 1.19
 authors: [ rona_tombo ]
 load: STARTUP
 loadbefore:

@@ -20,7 +20,7 @@ repositories {
     mavenCentral()
     maven {
         name = "papermc-repo"
-        setUrl("https://repo.papermc.io/repository/maven-public/")
+        url = uri("https://repo.papermc.io/repository/maven-public/")
         content {
             includeGroup("io.papermc.paper")
             includeGroup("com.mojang")
@@ -29,18 +29,18 @@ repositories {
     }
     maven {
         name = "sonatype"
-        setUrl("https://oss.sonatype.org/content/groups/public/")
+        url = uri("https://oss.sonatype.org/content/groups/public/")
     }
     maven {
         name = "BanManager repo"
-        setUrl("https://ci.frostcast.net/plugin/repository/everything")
+        url = uri("https://ci.frostcast.net/plugin/repository/everything")
         content {
             includeGroup("me.confuser.banmanager.BanManagerLibs")
         }
     }
     maven {
         name = "OnARandomBox"
-        setUrl("https://repo.onarandombox.com/content/groups/public/")
+        url = uri("https://repo.onarandombox.com/content/groups/public/")
         content {
             includeGroup("com.onarandombox.multiversecore")
         }
@@ -51,14 +51,13 @@ repositories {
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
-    compileOnly("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    paperDevBundle("1.18.2-R0.1-SNAPSHOT")
+    paperDevBundle("1.19.1-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-extra-kotlin:4.11.0") {
         exclude("net.kyori")
     }
 
-    implementation("land.vani.mcorouhlin:mcorouhlin-api:5.0.0")
-    implementation("land.vani.mcorouhlin:mcorouhlin-paper:5.0.0")
+    implementation("land.vani.mcorouhlin:mcorouhlin-api:6.0.0")
+    implementation("land.vani.mcorouhlin:mcorouhlin-paper:6.0.0")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-api:SNAPSHOT")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-paper:SNAPSHOT")
 
@@ -76,7 +75,6 @@ dependencies {
     compileOnly("me.confuser.banmanager:BanManagerBukkit:7.8.0")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
-
     compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
