@@ -5,6 +5,7 @@ import kotlinx.coroutines.runBlocking
 import land.vani.plugin.core.VanilandPlugin
 import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
+import land.vani.plugin.core.config.PortalWarpNpcsConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
 import org.koin.dsl.module
 
@@ -28,6 +29,13 @@ fun configModule(plugin: VanilandPlugin) = module {
     }
     single {
         AutoMessagesConfig(plugin).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
+        PortalWarpNpcsConfig(plugin).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }

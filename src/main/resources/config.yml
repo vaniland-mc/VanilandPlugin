@@ -4,3 +4,4 @@ features:
   safetyLogin: true
   vanilandCommand: true
   commands: true
+  portalWarpNpc: true

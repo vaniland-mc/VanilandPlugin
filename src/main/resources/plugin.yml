@@ -4,10 +4,11 @@ main: land.vani.plugin.core.VanilandPlugin
 api-version: 1.19
 authors: [ rona_tombo ]
 load: STARTUP
-loadbefore:
+softdepend:
+  - Citizens
+  - Multiverse-Core
   - WorldGuard
   - LuckPerms
   - LunaChat
   - BanManager
   - Votifier
-  - Multiverse-Core
