@@ -7,6 +7,7 @@ import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
 import land.vani.plugin.core.config.PortalWarpNpcsConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
+import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import org.koin.dsl.module
 
 fun modulesWithFeatures(plugin: VanilandPlugin, mainConfig: MainConfig) = buildList {
@@ -36,6 +37,13 @@ fun configModule(plugin: VanilandPlugin) = module {
     }
     single {
         PortalWarpNpcsConfig(plugin).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
+        WorldWarpNpcsConfig(plugin).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }

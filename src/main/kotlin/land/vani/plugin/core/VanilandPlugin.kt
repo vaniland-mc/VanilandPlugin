@@ -9,6 +9,7 @@ import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
 import land.vani.plugin.core.config.PortalWarpNpcsConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
+import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import land.vani.plugin.core.di.VanilandCoreKoinComponent
 import land.vani.plugin.core.di.modulesWithFeatures
 import land.vani.plugin.core.di.startVanilandKoin
@@ -21,6 +22,7 @@ import land.vani.plugin.core.features.SafetyLogin
 import land.vani.plugin.core.features.VanilandCommand
 import land.vani.plugin.core.features.Vote
 import land.vani.plugin.core.features.commands.Commands
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.koin.core.component.inject
 
 class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
@@ -41,6 +43,9 @@ class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
     val safetyLoginsConfig by inject<SafetyLoginsConfig>()
     val autoMessageConfig by inject<AutoMessagesConfig>()
     val portalWarpNpcsConfig by inject<PortalWarpNpcsConfig>()
+    val worldWarpNpcsConfig by inject<WorldWarpNpcsConfig>()
+
+    val miniMessage: MiniMessage = MiniMessage.miniMessage()
 
     private suspend fun saveDefaultConfigs() = withContext(Dispatchers.IO) {
         saveResource("config.yml", false)
