@@ -1,6 +1,8 @@
 package land.vani.plugin.core.features
 
 import land.vani.mcorouhlin.command.dsl.command
+import land.vani.mcorouhlin.paper.permission.hasPermission
+import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.event.NPCRightClickEvent
@@ -27,8 +29,11 @@ object WorldWarpMobNpc : Feature<WorldWarpMobNpc>() {
         registerCommands(plugin)
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     private fun registerCommands(plugin: VanilandPlugin) {
         val command = command<CommandSender>("spawnWorldWarpMobNpc") {
+            required { it.hasPermission(Permissions.ADMIN) }
+
             runs {
                 if (source !is Player) {
                     WorldWarpNpc.sendMessage(

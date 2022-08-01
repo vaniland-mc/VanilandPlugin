@@ -8,6 +8,8 @@ import land.vani.mcorouhlin.paper.inventory.inventory
 import land.vani.mcorouhlin.paper.inventory.openInventory
 import land.vani.mcorouhlin.paper.item.editMeta
 import land.vani.mcorouhlin.paper.item.itemStack
+import land.vani.mcorouhlin.paper.permission.hasPermission
+import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import land.vani.plugin.core.config.WorldWarpNode
 import net.citizensnpcs.api.CitizensAPI
@@ -46,6 +48,8 @@ object WorldWarpNpc : Feature<WorldWarpNpc>() {
     @Suppress("RemoveExplicitTypeArguments")
     private fun registerCommands(plugin: VanilandPlugin) {
         val command = command<CommandSender>("spawnWorldWarpNpc") {
+            required { it.hasPermission(Permissions.ADMIN) }
+
             val world by world("world")
 
             runs {

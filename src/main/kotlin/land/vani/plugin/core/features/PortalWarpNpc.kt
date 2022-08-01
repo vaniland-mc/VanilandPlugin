@@ -8,6 +8,8 @@ import land.vani.mcorouhlin.paper.inventory.inventory
 import land.vani.mcorouhlin.paper.inventory.openInventory
 import land.vani.mcorouhlin.paper.item.editMeta
 import land.vani.mcorouhlin.paper.item.itemStack
+import land.vani.mcorouhlin.paper.permission.hasPermission
+import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.event.CitizensEnableEvent
@@ -50,6 +52,8 @@ object PortalWarpNpc : Feature<PortalWarpNpc>() {
     @Suppress("RemoveExplicitTypeArguments")
     private fun registerCommands(plugin: VanilandPlugin) {
         val command = command<CommandSender>("spawnPortalWarpNpc") {
+            required { it.hasPermission(Permissions.ADMIN) }
+
             val world by world("world")
             val locationType by enum<_, LocationType>("locationType")
 

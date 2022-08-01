@@ -2,9 +2,12 @@ package land.vani.plugin.core.features
 
 import kotlinx.coroutines.runBlocking
 import land.vani.mcorouhlin.command.dsl.command
+import land.vani.mcorouhlin.paper.permission.hasPermission
+import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
+import org.bukkit.command.CommandSender
 
 object VanilandCommand : Feature<VanilandCommand>() {
     override val key: Key<VanilandCommand> = Key("vanilandCommand")
@@ -13,7 +16,10 @@ object VanilandCommand : Feature<VanilandCommand>() {
         plugin.registerCommand(createVanilandCommand(plugin))
     }
 
-    private fun createVanilandCommand(plugin: VanilandPlugin) = command("vaniland") {
+    @Suppress("RemoveExplicitTypeArguments")
+    private fun createVanilandCommand(plugin: VanilandPlugin) = command<CommandSender>("vaniland") {
+        required { it.hasPermission(Permissions.ADMIN) }
+
         subCommands(
             createReloadCommand(plugin)
         )
