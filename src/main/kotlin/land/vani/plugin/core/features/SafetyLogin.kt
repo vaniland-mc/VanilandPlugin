@@ -10,6 +10,7 @@ import land.vani.mcorouhlin.paper.permission.hasPermission
 import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import land.vani.plugin.core.config.SafetyLoginConfigNode
+import land.vani.plugin.core.config.SafetyLoginsConfig
 import land.vani.plugin.core.util.formattedString
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
@@ -19,39 +20,48 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
+import org.bukkit.event.server.PluginEnableEvent
 
-object SafetyLogin : Feature<SafetyLogin>() {
-    override val key: Key<SafetyLogin> = Key("safetyLogin")
+class SafetyLogin(
+    private val plugin: VanilandPlugin,
+    private val safetyLoginsConfig: SafetyLoginsConfig,
+) : Feature<SafetyLogin>() {
+    companion object : Key<SafetyLogin>("safetyLogin")
 
-    override suspend fun onEnable(plugin: VanilandPlugin) {
-        registerEventListener(plugin)
-        registerCommands(plugin)
+    override val key: Key<SafetyLogin> = Companion
+
+    override suspend fun onEnable() {
+        registerEventListener()
+        registerCommands()
     }
 
-    private fun registerEventListener(plugin: VanilandPlugin) = plugin.events {
-        on<PlayerJoinEvent> { event ->
-            val player = event.player
-            val safetyLogin = plugin.safetyLoginsConfig.safetyLogins[player.uniqueId] ?: return@on
-            event.player.teleport(safetyLogin.location)
+    private fun registerEventListener() = plugin.events {
+        on<PluginEnableEvent> topOn@{ enableEvent ->
+            if (enableEvent.plugin != plugin) return@topOn
+            on<PlayerJoinEvent> { event ->
+                val player = event.player
+                val safetyLogin = safetyLoginsConfig.safetyLogins[player.uniqueId] ?: return@on
+                event.player.teleport(safetyLogin.location)
 
-            sendMessage(
-                player,
-                text {
-                    content("運営によりログイン時にテレポートされました\n理由: ${safetyLogin.reason}")
-                    decoration(TextDecoration.BOLD, true)
-                    color(NamedTextColor.YELLOW)
-                }
-            )
+                sendMessage(
+                    player,
+                    text {
+                        content("運営によりログイン時にテレポートされました\n理由: ${safetyLogin.reason}")
+                        decoration(TextDecoration.BOLD, true)
+                        color(NamedTextColor.YELLOW)
+                    }
+                )
 
-            plugin.safetyLoginsConfig.safetyLogins.remove(player.uniqueId)
+                safetyLoginsConfig.safetyLogins.remove(player.uniqueId)
+            }
         }
     }
 
-    private fun registerCommands(plugin: VanilandPlugin) {
-        plugin.registerCommand(setSafetyLoginCommand(plugin))
+    private fun registerCommands() {
+        plugin.registerCommand(setSafetyLoginCommand())
     }
 
-    private fun setSafetyLoginCommand(plugin: VanilandPlugin) = command<CommandSender>("setSafetySpawn".lowercase()) {
+    private fun setSafetyLoginCommand() = command<CommandSender>("setSafetySpawn".lowercase()) {
         val player by offlinePlayer("player")
         val reason by string("reason")
 
@@ -64,7 +74,7 @@ object SafetyLogin : Feature<SafetyLogin>() {
             }
             val location = (source as Player).location
 
-            setSafetyLogin(plugin, player, location, reason)
+            setSafetyLogin(player, location, reason)
 
             source.sendMessage(
                 text {
@@ -75,9 +85,9 @@ object SafetyLogin : Feature<SafetyLogin>() {
         }
     }
 
-    fun setSafetyLogin(plugin: VanilandPlugin, player: OfflinePlayer, location: Location, reason: String) {
+    fun setSafetyLogin(player: OfflinePlayer, location: Location, reason: String) {
         runBlocking(Dispatchers.IO) {
-            plugin.safetyLoginsConfig.apply {
+            safetyLoginsConfig.apply {
                 safetyLogins[player.uniqueId] = SafetyLoginConfigNode(location, reason)
                 save()
             }

@@ -4,16 +4,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import land.vani.plugin.core.VanilandPlugin
 import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.minimessage.MiniMessage
 import org.bukkit.configuration.file.YamlConfiguration
 import kotlin.io.path.div
 import kotlin.io.path.reader
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.minutes
 
-class AutoMessagesConfig(plugin: VanilandPlugin) {
+class AutoMessagesConfig(
+    plugin: VanilandPlugin,
+    private val miniMessage: MiniMessage,
+) {
     private val configPath = plugin.dataFolder.toPath() / "autoMessages.yml"
     private val config = YamlConfiguration()
-    private val miniMessage = plugin.miniMessage
 
     suspend fun reload() {
         withContext(Dispatchers.IO) {

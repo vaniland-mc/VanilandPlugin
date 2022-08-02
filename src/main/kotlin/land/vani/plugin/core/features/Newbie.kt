@@ -15,24 +15,28 @@ import org.bukkit.event.player.PlayerJoinEvent
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.toJavaDuration
 
-object Newbie : Feature<Newbie>() {
-    override val key: Key<Newbie> = Key("newbie")
+class Newbie(
+    private val plugin: VanilandPlugin,
+) : Feature<Newbie>() {
+    companion object : Key<Newbie>("newbie") {
+        private const val BREAD_AMOUNT = 32
 
-    private const val BREAD_AMOUNT = 32
+        private val NEWBIE_ITEMS = setOf(
+            itemStack(Material.STONE_PICKAXE),
+            itemStack(Material.STONE_SWORD),
+            itemStack(Material.STONE_AXE),
+            itemStack(Material.STONE_SHOVEL),
+            itemStack(Material.BREAD, BREAD_AMOUNT),
+        )
 
-    private val NEWBIE_ITEMS = setOf(
-        itemStack(Material.STONE_PICKAXE),
-        itemStack(Material.STONE_SWORD),
-        itemStack(Material.STONE_AXE),
-        itemStack(Material.STONE_SHOVEL),
-        itemStack(Material.BREAD, BREAD_AMOUNT),
-    )
+        private val TITLE_FADE_IN = 0.5.seconds
+        private val TITLE_STAY = 3.seconds
+        private val TITLE_FADE_OUT = 0.5.seconds
+    }
 
-    private val TITLE_FADE_IN = 0.5.seconds
-    private val TITLE_STAY = 3.seconds
-    private val TITLE_FADE_OUT = 0.5.seconds
+    override val key: Key<Newbie> = Companion
 
-    private fun registerNewbieBroadcast(plugin: VanilandPlugin) = plugin.events {
+    private fun registerNewbieBroadcast() = plugin.events {
         on<PlayerJoinEvent> { event ->
             if (event.player.hasPlayedBefore()) return@on
 
@@ -50,7 +54,7 @@ object Newbie : Feature<Newbie>() {
         }
     }
 
-    private fun registerNewbieGiveItem(plugin: VanilandPlugin) = plugin.events {
+    private fun registerNewbieGiveItem() = plugin.events {
         on<PlayerJoinEvent> { event ->
             if (event.player.hasPlayedBefore()) return@on
 
@@ -58,7 +62,7 @@ object Newbie : Feature<Newbie>() {
         }
     }
 
-    private fun registerNewbieShowNotice(plugin: VanilandPlugin) = plugin.events {
+    private fun registerNewbieShowNotice() = plugin.events {
         on<PlayerJoinEvent> { event ->
             if (event.player.hasPlayedBefore()) return@on
 
@@ -110,9 +114,9 @@ object Newbie : Feature<Newbie>() {
         }
     }
 
-    override suspend fun onEnable(plugin: VanilandPlugin) {
-        registerNewbieBroadcast(plugin)
-        registerNewbieGiveItem(plugin)
-        registerNewbieShowNotice(plugin)
+    override suspend fun onEnable() {
+        registerNewbieBroadcast()
+        registerNewbieGiveItem()
+        registerNewbieShowNotice()
     }
 }

@@ -5,35 +5,45 @@ import land.vani.mcorouhlin.command.dsl.command
 import land.vani.mcorouhlin.paper.permission.hasPermission
 import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
+import land.vani.plugin.core.config.AutoMessagesConfig
+import land.vani.plugin.core.config.MainConfig
+import land.vani.plugin.core.config.SafetyLoginsConfig
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.command.CommandSender
 
-object VanilandCommand : Feature<VanilandCommand>() {
-    override val key: Key<VanilandCommand> = Key("vanilandCommand")
+class VanilandCommand(
+    private val plugin: VanilandPlugin,
+    private val mainConfig: MainConfig,
+    private val safetyLoginsConfig: SafetyLoginsConfig,
+    private val autoMessagesConfig: AutoMessagesConfig,
+) : Feature<VanilandCommand>() {
+    companion object : Key<VanilandCommand>("vanilandCommand")
 
-    override suspend fun onEnable(plugin: VanilandPlugin) {
-        plugin.registerCommand(createVanilandCommand(plugin))
+    override val key: Key<VanilandCommand> = Companion
+
+    override suspend fun onEnable() {
+        plugin.registerCommand(createVanilandCommand())
     }
 
     @Suppress("RemoveExplicitTypeArguments")
-    private fun createVanilandCommand(plugin: VanilandPlugin) = command<CommandSender>("vaniland") {
+    private fun createVanilandCommand() = command<CommandSender>("vaniland") {
         required { it.hasPermission(Permissions.ADMIN) }
 
         subCommands(
-            createReloadCommand(plugin)
+            createReloadCommand()
         )
     }
 
-    private fun createReloadCommand(plugin: VanilandPlugin) = command("reload") {
+    private fun createReloadCommand() = command("reload") {
         runs {
             runBlocking {
-                plugin.mainConfig.reload()
-                plugin.safetyLoginsConfig.reload()
-                plugin.autoMessageConfig.reload()
+                mainConfig.reload()
+                safetyLoginsConfig.reload()
+                autoMessagesConfig.reload()
 
-                val autoMessageFeature = plugin.featuresRegistry.getFeature(AutoMessage.key)
-                autoMessageFeature?.reload(plugin)
+                val autoMessageFeature = plugin.featuresRegistry.getFeature(AutoMessage)
+                autoMessageFeature?.reload()
 
                 sendMessage(
                     source,

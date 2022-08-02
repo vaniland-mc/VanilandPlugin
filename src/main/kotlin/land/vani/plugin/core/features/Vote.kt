@@ -7,6 +7,7 @@ import land.vani.mcorouhlin.paper.event.on
 import land.vani.mcorouhlin.paper.item.editMeta
 import land.vani.mcorouhlin.paper.item.itemStack
 import land.vani.plugin.core.VanilandPlugin
+import land.vani.plugin.core.config.MainConfig
 import land.vani.plugin.core.util.giveItemOrDrop
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
@@ -14,7 +15,6 @@ import net.kyori.adventure.sound.Sound
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.Material
-import org.bukkit.Server
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerChangedWorldEvent
 import org.bukkit.event.player.PlayerJoinEvent
@@ -24,34 +24,64 @@ import kotlin.random.Random
 import kotlin.random.nextInt
 import org.bukkit.Sound as BukkitSound
 
-object Vote : Feature<Vote>() {
-    override val key: Key<Vote> = Key("vote")
+class Vote(
+    private val plugin: VanilandPlugin,
+    private val mainConfig: MainConfig,
+) : Feature<Vote>() {
+    companion object : Key<Vote>("vote") {
+        private val BONUS_ITEM_NAME = text {
+            content("バニランド アイテム引換券")
+            color(NamedTextColor.AQUA)
+            decoration(TextDecoration.BOLD, true)
+        }
 
-    override suspend fun onEnable(plugin: VanilandPlugin) = plugin.events {
+        private val BONUS_ITEM_LORE = listOf(
+            text {
+                content("サーバーリストで投票すると貰える券")
+                color(NamedTextColor.GRAY)
+            },
+            text {
+                content("運営が設置する施設でいろいろなものが買えるらしい…？")
+                color(NamedTextColor.GRAY)
+            }
+        )
+
+        private const val BONUS_ITEM_CUSTOM_MODEL_DATA = 100001
+
+        private const val CHANCE_MIN = 1
+        private const val CHANCE_MAX = 100
+        private fun chance(percentage: Int): Boolean = Random.nextInt(CHANCE_MIN..CHANCE_MAX) < percentage
+
+        private const val LUCKY_BONUS_AMOUNT = 64
+    }
+
+    override val key: Key<Vote> = Companion
+
+    override suspend fun onEnable() = plugin.events {
         on<VotifierEvent> { event ->
             val player = plugin.server.getPlayer(event.vote.username)
 
-            if (player == null || player.world in plugin.mainConfig.voteBlacklistedWorlds) {
-                with(plugin.mainConfig) {
+            if (player == null || player.world in mainConfig.voteBlacklistedWorlds) {
+                with(mainConfig) {
                     voteBonusAwaitingPlayers[event.vote.username.lowercase()] =
                         (voteBonusAwaitingPlayers[event.vote.username.lowercase()] ?: 0) + 1
                 }
                 return@on
             }
-            giveBonusOnOnline(plugin.server, player, event.vote.serviceName)
+            giveBonusOnOnline(player, event.vote.serviceName)
         }
         on<PlayerJoinEvent> { event ->
-            giveBonus(plugin, event.player)
+            giveBonus(event.player)
         }
         on<PlayerChangedWorldEvent> { event ->
-            if (event.player.world in plugin.mainConfig.voteBlacklistedWorlds) {
+            if (event.player.world in mainConfig.voteBlacklistedWorlds) {
                 return@on
             }
-            giveBonus(plugin, event.player)
+            giveBonus(event.player)
         }
     }
 
-    private fun giveBonusOnOnline(server: Server, player: Player, serviceName: String?) {
+    private fun giveBonusOnOnline(player: Player, serviceName: String?) {
         val isLucky = chance(percentage = 3)
         val amount = if (isLucky) {
             LUCKY_BONUS_AMOUNT
@@ -64,7 +94,7 @@ object Vote : Feature<Vote>() {
         sendMessage(player, serviceName, amount)
 
         if (isLucky) {
-            server.broadcast(
+            plugin.server.broadcast(
                 text {
                     content("[祝]")
                     color(NamedTextColor.GOLD)
@@ -90,7 +120,7 @@ object Vote : Feature<Vote>() {
         )
     }
 
-    private fun giveBonus(plugin: VanilandPlugin, player: Player) = with(plugin.mainConfig) {
+    private fun giveBonus(player: Player) = with(mainConfig) {
         val amount = voteBonusAwaitingPlayers[player.name.lowercase()] ?: return@with
         if (amount == 0) return
         voteBonusAwaitingPlayers[player.name.lowercase()] = 0
@@ -133,29 +163,4 @@ object Vote : Feature<Vote>() {
             setCustomModelData(BONUS_ITEM_CUSTOM_MODEL_DATA)
         }
     }
-
-    private val BONUS_ITEM_NAME = text {
-        content("バニランド アイテム引換券")
-        color(NamedTextColor.AQUA)
-        decoration(TextDecoration.BOLD, true)
-    }
-
-    private val BONUS_ITEM_LORE = listOf(
-        text {
-            content("サーバーリストで投票すると貰える券")
-            color(NamedTextColor.GRAY)
-        },
-        text {
-            content("運営が設置する施設でいろいろなものが買えるらしい…？")
-            color(NamedTextColor.GRAY)
-        }
-    )
-
-    private const val BONUS_ITEM_CUSTOM_MODEL_DATA = 100001
-
-    private const val CHANCE_MIN = 1
-    private const val CHANCE_MAX = 100
-    private fun chance(percentage: Int): Boolean = Random.nextInt(CHANCE_MIN..CHANCE_MAX) < percentage
-
-    private const val LUCKY_BONUS_AMOUNT = 64
 }

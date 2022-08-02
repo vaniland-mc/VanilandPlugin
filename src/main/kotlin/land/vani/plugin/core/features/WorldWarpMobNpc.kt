@@ -20,23 +20,56 @@ import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import java.net.URL
 
-object WorldWarpMobNpc : Feature<WorldWarpMobNpc>() {
-    override val key: Key<WorldWarpMobNpc> = Key("worldWarpMobNpc")
+class WorldWarpMobNpc(
+    private val plugin: VanilandPlugin,
+) : Feature<WorldWarpMobNpc>() {
+    companion object : Key<WorldWarpMobNpc>("worldWarpMobNpc") {
+        private val ALLOWED_ENTITY_TYPES = setOf(
+            EntityType.BEE,
+            EntityType.CAT,
+            EntityType.CHICKEN,
+            EntityType.COW,
+            EntityType.DONKEY,
+            EntityType.FOX,
+            EntityType.GHAST,
+            EntityType.GOAT,
+            EntityType.HORSE,
+            EntityType.IRON_GOLEM,
+            EntityType.LLAMA,
+            EntityType.MULE,
+            EntityType.MUSHROOM_COW,
+            EntityType.OCELOT,
+            EntityType.PANDA,
+            EntityType.PARROT,
+            EntityType.PIG,
+            EntityType.POLAR_BEAR,
+            EntityType.RABBIT,
+            EntityType.SHEEP,
+            EntityType.SKELETON_HORSE,
+            EntityType.STRIDER,
+            EntityType.TADPOLE,
+            EntityType.TURTLE,
+            EntityType.VILLAGER,
+            EntityType.WOLF
+        )
+    }
+
+    override val key: Key<WorldWarpMobNpc> = Companion
 
     internal val mobSelections = mutableMapOf<Player, MutableSet<Entity>>()
 
-    override suspend fun onEnable(plugin: VanilandPlugin) {
-        registerCommands(plugin)
+    override suspend fun onEnable() {
+        registerCommands()
     }
 
     @Suppress("RemoveExplicitTypeArguments")
-    private fun registerCommands(plugin: VanilandPlugin) {
+    private fun registerCommands() {
         val command = command<CommandSender>("spawnWorldWarpMobNpc") {
             required { it.hasPermission(Permissions.ADMIN) }
 
             runs {
                 if (source !is Player) {
-                    WorldWarpNpc.sendMessage(
+                    sendMessage(
                         source,
                         text {
                             content("You must be a player to use this command.")
@@ -62,7 +95,7 @@ object WorldWarpMobNpc : Feature<WorldWarpMobNpc>() {
         plugin.registerCommand(command)
     }
 
-    class WorldWarpMobTrait : Trait("worldWarpMobTrait") {
+    inner class WorldWarpMobTrait : Trait("worldWarpMobTrait") {
         @EventHandler
         fun onClick(event: NPCRightClickEvent) {
             if (event.npc != npc) return
@@ -120,37 +153,6 @@ object WorldWarpMobNpc : Feature<WorldWarpMobNpc>() {
                             content("(${entity.type.name.lowercase()})")
                         }
                 }.reduce { first, second -> first + Component.newline() + second }
-            )
-        }
-
-        companion object {
-            private val ALLOWED_ENTITY_TYPES = setOf(
-                EntityType.BEE,
-                EntityType.CAT,
-                EntityType.CHICKEN,
-                EntityType.COW,
-                EntityType.DONKEY,
-                EntityType.FOX,
-                EntityType.GHAST,
-                EntityType.GOAT,
-                EntityType.HORSE,
-                EntityType.IRON_GOLEM,
-                EntityType.LLAMA,
-                EntityType.MULE,
-                EntityType.MUSHROOM_COW,
-                EntityType.OCELOT,
-                EntityType.PANDA,
-                EntityType.PARROT,
-                EntityType.PIG,
-                EntityType.POLAR_BEAR,
-                EntityType.RABBIT,
-                EntityType.SHEEP,
-                EntityType.SKELETON_HORSE,
-                EntityType.STRIDER,
-                EntityType.TADPOLE,
-                EntityType.TURTLE,
-                EntityType.VILLAGER,
-                EntityType.WOLF
             )
         }
     }

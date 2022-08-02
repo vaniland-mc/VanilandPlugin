@@ -12,6 +12,7 @@ import land.vani.mcorouhlin.paper.permission.hasPermission
 import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
 import land.vani.plugin.core.config.WorldWarpNode
+import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import net.citizensnpcs.api.CitizensAPI
 import net.citizensnpcs.api.event.CitizensEnableEvent
 import net.citizensnpcs.api.event.NPCRightClickEvent
@@ -26,18 +27,22 @@ import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.inventory.meta.ItemMeta
-import org.bukkit.plugin.java.JavaPlugin
 import java.net.URL
 
-object WorldWarpNpc : Feature<WorldWarpNpc>() {
-    override val key: Key<WorldWarpNpc> = Key("worldWarpNpc")
+class WorldWarpNpc(
+    private val plugin: VanilandPlugin,
+    private val worldWarpNpcsConfig: WorldWarpNpcsConfig,
+) : Feature<WorldWarpNpc>() {
+    companion object : Key<WorldWarpNpc>("worldWarpNpc")
 
-    override suspend fun onEnable(plugin: VanilandPlugin) {
-        registerTraits(plugin)
-        registerCommands(plugin)
+    override val key: Key<WorldWarpNpc> = Companion
+
+    override suspend fun onEnable() {
+        registerTraits()
+        registerCommands()
     }
 
-    private fun registerTraits(plugin: VanilandPlugin) = plugin.events {
+    private fun registerTraits() = plugin.events {
         on<CitizensEnableEvent> {
             CitizensAPI.getTraitFactory().registerTrait(
                 TraitInfo.create(WorldWarpTrait::class.java)
@@ -46,7 +51,7 @@ object WorldWarpNpc : Feature<WorldWarpNpc>() {
     }
 
     @Suppress("RemoveExplicitTypeArguments")
-    private fun registerCommands(plugin: VanilandPlugin) {
+    private fun registerCommands() {
         val command = command<CommandSender>("spawnWorldWarpNpc") {
             required { it.hasPermission(Permissions.ADMIN) }
 
@@ -64,7 +69,7 @@ object WorldWarpNpc : Feature<WorldWarpNpc>() {
                     return@runs
                 }
 
-                val worlds = plugin.worldWarpNpcsConfig.worlds
+                val worlds = worldWarpNpcsConfig.worlds
                     .filter { it.location.world != world }
 
                 val npc = CitizensAPI.getNPCRegistry().createNPC(
@@ -88,8 +93,7 @@ object WorldWarpNpc : Feature<WorldWarpNpc>() {
         plugin.registerCommand(command)
     }
 
-    class WorldWarpTrait : Trait("worldWarpTrait") {
-        private val plugin = JavaPlugin.getPlugin(VanilandPlugin::class.java)
+    inner class WorldWarpTrait : Trait("worldWarpTrait") {
         private val inventory: McorouhlinInventory by lazy {
             fun McorouhlinInventory.addSlot(slot: Int, node: WorldWarpNode) {
                 slot(
@@ -104,7 +108,7 @@ object WorldWarpNpc : Feature<WorldWarpNpc>() {
                     onPostClick { event ->
                         event.whoClicked.teleport(node.location)
                         val worldWarpMobNpc = plugin.featuresRegistry
-                            .getFeature(WorldWarpMobNpc.key) ?: return@onPostClick
+                            .getFeature(WorldWarpMobNpc) ?: return@onPostClick
                         worldWarpMobNpc.mobSelections.remove(event.whoClicked)
                             ?.forEach { mob ->
                                 mob.teleport(node.location)
