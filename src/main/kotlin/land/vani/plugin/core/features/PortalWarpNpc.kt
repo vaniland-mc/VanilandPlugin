@@ -81,7 +81,7 @@ class PortalWarpNpc(
     }
 
     @Suppress("RemoveExplicitTypeArguments")
-    private fun registerCommands() {
+    private suspend fun registerCommands() {
         val command = command<CommandSender>("spawnPortalWarpNpc") {
             required { it.hasPermission(Permissions.ADMIN) }
 

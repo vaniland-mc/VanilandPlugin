@@ -20,7 +20,6 @@ import org.bukkit.OfflinePlayer
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
-import org.bukkit.event.server.PluginEnableEvent
 
 class SafetyLogin(
     private val plugin: VanilandPlugin,
@@ -31,33 +30,32 @@ class SafetyLogin(
     override val key: Key<SafetyLogin> = Companion
 
     override suspend fun onEnable() {
+        println("registerEventListener")
         registerEventListener()
+        println("registerCommands")
         registerCommands()
     }
 
     private fun registerEventListener() = plugin.events {
-        on<PluginEnableEvent> topOn@{ enableEvent ->
-            if (enableEvent.plugin != plugin) return@topOn
-            on<PlayerJoinEvent> { event ->
-                val player = event.player
-                val safetyLogin = safetyLoginsConfig.safetyLogins[player.uniqueId] ?: return@on
-                event.player.teleport(safetyLogin.location)
+        on<PlayerJoinEvent> { event ->
+            val player = event.player
+            val safetyLogin = safetyLoginsConfig.safetyLogins[player.uniqueId] ?: return@on
+            event.player.teleport(safetyLogin.location)
 
-                sendMessage(
-                    player,
-                    text {
-                        content("運営によりログイン時にテレポートされました\n理由: ${safetyLogin.reason}")
-                        decoration(TextDecoration.BOLD, true)
-                        color(NamedTextColor.YELLOW)
-                    }
-                )
+            sendMessage(
+                player,
+                text {
+                    content("運営によりログイン時にテレポートされました\n理由: ${safetyLogin.reason}")
+                    decoration(TextDecoration.BOLD, true)
+                    color(NamedTextColor.YELLOW)
+                }
+            )
 
-                safetyLoginsConfig.safetyLogins.remove(player.uniqueId)
-            }
+            safetyLoginsConfig.safetyLogins.remove(player.uniqueId)
         }
     }
 
-    private fun registerCommands() {
+    private suspend fun registerCommands() {
         plugin.registerCommand(setSafetyLoginCommand())
     }
 

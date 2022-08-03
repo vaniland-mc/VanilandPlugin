@@ -11,19 +11,15 @@ class FeaturesRegistry(
     internal val allFeatures: Map<Feature.Key<*>, Lazy<Feature<*>>>,
 ) : VanilandCoreKoinComponent {
     suspend fun enableFeatures(toEnableFeatures: List<Feature.Key<*>>) {
-        println(toEnableFeatures)
         toEnableFeatures.mapNotNull { key ->
             allFeatures[key]
-        }.map {
+        }.forEach {
             val feature by it
-            println("feature: $feature")
-            plugin.launch {
-                plugin.logger.info("Enabling feature '${feature.key}'")
-                feature.onEnable()
-                feature.isEnabled = true
-                plugin.logger.info("Enabled feature '${feature.key}'")
-            }
-        }.joinAll()
+            plugin.logger.info("Enabling feature '${feature.key}'")
+            feature.onEnable()
+            feature.isEnabled = true
+            plugin.logger.info("Enabled feature '${feature.key}'")
+        }
 
         plugin.logger.info("Enabled all features!")
     }

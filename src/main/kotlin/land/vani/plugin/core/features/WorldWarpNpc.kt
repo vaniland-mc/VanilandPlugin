@@ -51,7 +51,7 @@ class WorldWarpNpc(
     }
 
     @Suppress("RemoveExplicitTypeArguments")
-    private fun registerCommands() {
+    private suspend fun registerCommands() {
         val command = command<CommandSender>("spawnWorldWarpNpc") {
             required { it.hasPermission(Permissions.ADMIN) }
 
