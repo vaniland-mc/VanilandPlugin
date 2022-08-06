@@ -9,6 +9,7 @@ import net.citizensnpcs.api.event.NPCRightClickEvent
 import net.citizensnpcs.api.trait.Trait
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
+import net.kyori.adventure.extra.kotlin.translatable
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import org.bukkit.command.CommandSender
@@ -148,9 +149,9 @@ class WorldWarpMobNpc(
                         content("= ")
                     } + (entity.customName() ?: entity.name()) +
                         Component.space() +
-                        text {
+                        translatable {
                             resetStyle()
-                            content("(${entity.type.name.lowercase()})")
+                            key(entity.type)
                         }
                 }.reduce { first, second -> first + Component.newline() + second }
             )
