@@ -1,5 +1,6 @@
 package land.vani.plugin.core.di
 
+import com.onarandombox.MultiverseCore.MultiverseCore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import land.vani.plugin.core.VanilandPlugin
@@ -7,12 +8,14 @@ import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
 import land.vani.plugin.core.config.OpInventoryConfig
 import land.vani.plugin.core.config.PortalWarpNpcsConfig
+import land.vani.plugin.core.config.ResetWorldConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
 import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import land.vani.plugin.core.features.AutoMessage
 import land.vani.plugin.core.features.Newbie
 import land.vani.plugin.core.features.OpCommand
 import land.vani.plugin.core.features.PortalWarpNpc
+import land.vani.plugin.core.features.ResetWorld
 import land.vani.plugin.core.features.SafetyLogin
 import land.vani.plugin.core.features.VanilandCommand
 import land.vani.plugin.core.features.Vote
@@ -76,6 +79,13 @@ fun configModule() = module {
             }
         }
     }
+    single {
+        ResetWorldConfig(get()).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
 }
 
 fun featuresModule() = module {
@@ -89,6 +99,7 @@ fun featuresModule() = module {
     singleOf(::PortalWarpNpc)
     singleOf(::WorldWarpNpc)
     singleOf(::WorldWarpMobNpc)
+    singleOf(::ResetWorld)
 
     single(named("features")) {
         mapOf(
@@ -102,6 +113,7 @@ fun featuresModule() = module {
             PortalWarpNpc to lazy { get<PortalWarpNpc>() },
             WorldWarpNpc to lazy { get<WorldWarpNpc>() },
             WorldWarpMobNpc to lazy { get<WorldWarpMobNpc>() },
+            ResetWorld to lazy { get<ResetWorld>() }
         )
     }
 }
@@ -118,5 +130,8 @@ fun adopterModule() = module {
     }
     single<NPCRegistry> {
         get<Citizens>().npcRegistry
+    }
+    single {
+        get<VanilandPlugin>().server.pluginManager.getPlugin("Multiverse-Core") as MultiverseCore
     }
 }
