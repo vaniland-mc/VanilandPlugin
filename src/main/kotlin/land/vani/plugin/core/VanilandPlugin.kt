@@ -28,6 +28,7 @@ class VanilandPlugin : McorouhlinKotlinPlugin(), VanilandCoreKoinComponent {
         saveResource("portalWarpNpcs.yml", false)
         saveResource("safetyLogins.yml", false)
         saveResource("worldWarpNpcs.yml", false)
+        saveResource("opInventory.yml", false)
     }
 
     override suspend fun onEnableAsync() {

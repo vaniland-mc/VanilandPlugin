@@ -5,11 +5,13 @@ import kotlinx.coroutines.runBlocking
 import land.vani.plugin.core.VanilandPlugin
 import land.vani.plugin.core.config.AutoMessagesConfig
 import land.vani.plugin.core.config.MainConfig
+import land.vani.plugin.core.config.OpInventoryConfig
 import land.vani.plugin.core.config.PortalWarpNpcsConfig
 import land.vani.plugin.core.config.SafetyLoginsConfig
 import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import land.vani.plugin.core.features.AutoMessage
 import land.vani.plugin.core.features.Newbie
+import land.vani.plugin.core.features.OpCommand
 import land.vani.plugin.core.features.PortalWarpNpc
 import land.vani.plugin.core.features.SafetyLogin
 import land.vani.plugin.core.features.VanilandCommand
@@ -67,6 +69,13 @@ fun configModule() = module {
             }
         }
     }
+    single {
+        OpInventoryConfig(get()).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
 }
 
 fun featuresModule() = module {
@@ -75,6 +84,7 @@ fun featuresModule() = module {
     singleOf(::Vote)
     singleOf(::SafetyLogin)
     singleOf(::VanilandCommand)
+    singleOf(::OpCommand)
     singleOf(::Commands)
     singleOf(::PortalWarpNpc)
     singleOf(::WorldWarpNpc)
@@ -87,6 +97,7 @@ fun featuresModule() = module {
             Vote to lazy { get<Vote>() },
             SafetyLogin to lazy { get<SafetyLogin>() },
             VanilandCommand to lazy { get<VanilandCommand>() },
+            OpCommand to lazy { get<OpCommand>() },
             Commands to lazy { get<Commands>() },
             PortalWarpNpc to lazy { get<PortalWarpNpc>() },
             WorldWarpNpc to lazy { get<WorldWarpNpc>() },
@@ -98,6 +109,9 @@ fun featuresModule() = module {
 fun adopterModule() = module {
     single {
         get<VanilandPlugin>().server.servicesManager.getRegistration(LuckPerms::class.java)!!.provider
+    }
+    single {
+        get<LuckPerms>().userManager
     }
     single {
         (get<VanilandPlugin>().server.pluginManager.getPlugin("Citizens") as Citizens)
