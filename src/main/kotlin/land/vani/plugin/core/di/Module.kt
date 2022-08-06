@@ -13,6 +13,7 @@ import land.vani.plugin.core.config.SafetyLoginsConfig
 import land.vani.plugin.core.config.WorldWarpNpcsConfig
 import land.vani.plugin.core.features.AutoMessage
 import land.vani.plugin.core.features.AutoRestart
+import land.vani.plugin.core.features.EntityCount
 import land.vani.plugin.core.features.Newbie
 import land.vani.plugin.core.features.OpCommand
 import land.vani.plugin.core.features.PortalWarpNpc
@@ -102,6 +103,7 @@ fun featuresModule() = module {
     singleOf(::WorldWarpMobNpc)
     singleOf(::ResetWorld)
     singleOf(::AutoRestart)
+    singleOf(::EntityCount)
 
     single(named("features")) {
         mapOf(
@@ -116,7 +118,8 @@ fun featuresModule() = module {
             WorldWarpNpc to lazy { get<WorldWarpNpc>() },
             WorldWarpMobNpc to lazy { get<WorldWarpMobNpc>() },
             ResetWorld to lazy { get<ResetWorld>() },
-            AutoRestart to lazy { get<AutoRestart>() }
+            AutoRestart to lazy { get<AutoRestart>() },
+            EntityCount to lazy { get<EntityCount>() }
         )
     }
 }

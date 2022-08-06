@@ -5,3 +5,4 @@ features:
   vanilandCommand: true
   commands: true
   portalWarpNpc: true
+  entityCount: true
