@@ -5,14 +5,12 @@ import net.kyori.adventure.extra.kotlin.style
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
-import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.command.CommandSender
 
 abstract class Feature<T : Feature<T>> {
     companion object {
         private val SYSTEM_MESSAGE_PREFIX_STYLE = style {
             color(NamedTextColor.YELLOW)
-            decoration(TextDecoration.BOLD, true)
         }
     }
 
@@ -25,13 +23,10 @@ abstract class Feature<T : Feature<T>> {
     open suspend fun onDisable() {}
 
     fun sendMessage(sender: CommandSender, message: Component) {
-        val formattedMessage = text { }.run {
-            this + text {
-                content("[システム($key)]")
-                style(SYSTEM_MESSAGE_PREFIX_STYLE)
-            }
-            this + message
-        }
+        val formattedMessage = text {
+            content("[システム($key)]")
+            style(SYSTEM_MESSAGE_PREFIX_STYLE)
+        } + message
         sender.sendMessage(formattedMessage)
     }
 
