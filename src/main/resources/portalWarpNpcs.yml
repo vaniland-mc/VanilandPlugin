@@ -1,0 +1,93 @@
+warpPortals:
+  - world: forest
+    spawnLocation:
+      ==: org.bukkit.Location
+      world: forest
+      x: 1973.0
+      y: 76.0
+      z: -649.0
+      pitch: 90.0
+      yaw: 0.0
+    portalALocation:
+      ==: org.bukkit.Location
+      world: forest
+      x: -2407.64
+      y: 68.00
+      z: 539.23
+      pitch: 0.0
+      yaw: 0.0
+    portalBLocation:
+      ==: org.bukkit.Location
+      world: forest
+      x: 1452.59
+      y: 63.00
+      z: -3117.74
+      pitch: 90.0
+      yaw: 0.0
+  - world: mountain
+    spawnLocation:
+      ==: org.bukkit.Location
+      world: mountain
+      x: -229.0
+      y: 74.0
+      z: 442.0
+      pitch: 90.0
+      yaw: 0.0
+    portalALocation:
+      ==: org.bukkit.Location
+      world: mountain
+      x: 308.47
+      y: 71.00
+      z: -3367.74
+      pitch: 0.0
+      yaw: 0.0
+    portalBLocation:
+      ==: org.bukkit.Location
+      world: mountain
+      x: -818.59
+      y: 78.00
+      z: 2455.44
+      pitch: 90.0
+      yaw: 0.0
+  - world: desert
+    spawnLocation:
+      ==: org.bukkit.Location
+      world: desert
+      x: -65.0
+      y: 74.0
+      z: 545.0
+      pitch: 90.0
+      yaw: 0.0
+    portalALocation:
+      ==: org.bukkit.Location
+      world: desert
+      x: 191.57
+      y: 67.00
+      z: -3857.38
+      pitch: 0.0
+      yaw: 0.0
+    portalBLocation:
+      ==: org.bukkit.Location
+      world: desert
+      x: -3345.39
+      y: 68.00
+      z: 537.64
+      pitch: -90.0
+      yaw: 0.0
+  - world: snow
+    spawnLocation:
+      ==: org.bukkit.Location
+      world: snow
+      x: -2168.0
+      y: 74.0
+      z: -1997.0
+      pitch: 90.0
+      yaw: 0.0
+    portalALocation:
+      ==: org.bukkit.Location
+      world: snow
+      x: 308.43
+      y: 69.00
+      z: 2911.27
+      pitch: 90.0
+      yaw: 0.0

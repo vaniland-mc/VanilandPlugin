@@ -1,0 +1,46 @@
+name: Build
+description: Build VanilandPlugin
+
+inputs:
+  github-token:
+    description: GitHub Token
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v3
+    - name: Setup JDK 17
+      uses: graalvm/setup-graalvm@v1
+      with:
+        version: "latest"
+        java-version: "17"
+        github-token: ${{ inputs.github-token }}
+    - name: Cache gradle
+      uses: gradle/gradle-build-action@v2
+    - name: Validate gradle wrapper
+      uses: gradle/wrapper-validation-action@v1
+    - name: Build
+      shell: bash
+      run: ./gradlew build
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: Package
+        path: "**/build/libs"
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: "**/build/test-results/test"
+    - name: Run koverXmlReport
+      if: always()
+      shell: bash
+      run: ./gradlew koverXmlReport
+    - name: Upload coverage reports
+      if: always()
+      uses: codecov/codecov-action@v3
+      with:
+        files: build/reports/kover/report.xml
