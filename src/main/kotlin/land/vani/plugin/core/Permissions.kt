@@ -9,6 +9,11 @@ enum class Permissions(
     override val children: Map<Permission, Boolean> = mapOf(),
     override val default: PermissionDefault? = null,
 ) : Permission {
+    PORTAL_WARP(
+        "vaniland.portal",
+        "Allows you to use the portal warp command.",
+        default = PermissionDefault.OP,
+    ),
     ADMIN(
         "vaniland.admin",
         "VanilandPlugin admin command",

@@ -31,7 +31,7 @@ class WorldWarpNpcsConfig(
             @Suppress("UNCHECKED_CAST")
             WorldWarpNode(
                 location = map["location"] as Location,
-                material = map["material"] as Material,
+                material = (map["material"] as String).let { Material.valueOf(it.uppercase()) },
                 displayName = miniMessage.deserialize(map["displayName"] as String),
                 lore = (map["lore"] as List<String>).map { miniMessage.deserialize(it) }
             )

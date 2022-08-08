@@ -30,20 +30,16 @@ class OpInventoryConfig(
     }
 
     val playerInventories: MutableMap<UUID, Array<ItemStack?>>
-        get() = config.getValues(false)
+        get() = config.getConfigurationSection("player")?.getValues(true).orEmpty()
             .map { (key, value) ->
-                UUID.fromString(key) to buildList {
-                    @Suppress("UNCHECKED_CAST")
-                    (value as Map<String, ItemStack?>).forEach { (t, u) ->
-                        add(t.toInt(), u)
-                    }
-                }.toTypedArray()
+                @Suppress("UNCHECKED_CAST")
+                UUID.fromString(key) to (value as List<ItemStack?>).toTypedArray()
             }.toMap(mutableMapOf())
             .let { delegate ->
                 ObservableMap(
                     delegate,
                     putCallback = { key, value ->
-                        config.set("player.$key", value)
+                        config.set("player.$key", value.toList())
                         runBlocking {
                             save()
                         }
@@ -64,20 +60,16 @@ class OpInventoryConfig(
             }
 
     val opInventories: MutableMap<UUID, Array<ItemStack?>>
-        get() = config.getValues(false)
+        get() = config.getConfigurationSection("op")?.getValues(true).orEmpty()
             .map { (key, value) ->
-                UUID.fromString(key) to buildList {
-                    @Suppress("UNCHECKED_CAST")
-                    (value as Map<String, ItemStack?>).forEach { (t, u) ->
-                        add(t.toInt(), u)
-                    }
-                }.toTypedArray()
+                @Suppress("UNCHECKED_CAST")
+                UUID.fromString(key) to (value as List<ItemStack?>).toTypedArray()
             }.toMap(mutableMapOf())
             .let { delegate ->
                 ObservableMap(
                     delegate,
                     putCallback = { key, value ->
-                        config.set("op.$key", value)
+                        config.set("op.$key", value.toList())
                         runBlocking {
                             save()
                         }

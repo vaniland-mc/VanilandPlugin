@@ -45,13 +45,6 @@ repositories {
             includeGroup("com.onarandombox.multiversecore")
         }
     }
-    maven {
-        name = "Citizens"
-        url = uri("https://repo.citizensnpcs.co/")
-        content {
-            includeGroup("net.citizensnpcs")
-        }
-    }
     maven("https://jitpack.io")
 }
 
@@ -63,8 +56,8 @@ dependencies {
         exclude("net.kyori")
     }
 
-    implementation("land.vani.mcorouhlin:mcorouhlin-api:6.0.3")
-    implementation("land.vani.mcorouhlin:mcorouhlin-paper:6.0.3")
+    implementation("land.vani.mcorouhlin:mcorouhlin-api:6.0.5")
+    implementation("land.vani.mcorouhlin:mcorouhlin-paper:6.0.5")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-api:SNAPSHOT")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-paper:SNAPSHOT")
 
@@ -83,7 +76,6 @@ dependencies {
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
     compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
-    compileOnly("net.citizensnpcs:citizens-main:2.0.30-SNAPSHOT")
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")

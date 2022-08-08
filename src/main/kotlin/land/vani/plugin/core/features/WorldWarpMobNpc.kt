@@ -1,12 +1,10 @@
 package land.vani.plugin.core.features
 
 import land.vani.mcorouhlin.command.dsl.command
+import land.vani.mcorouhlin.paper.event.on
 import land.vani.mcorouhlin.paper.permission.hasPermission
 import land.vani.plugin.core.Permissions
 import land.vani.plugin.core.VanilandPlugin
-import net.citizensnpcs.api.CitizensAPI
-import net.citizensnpcs.api.event.NPCRightClickEvent
-import net.citizensnpcs.api.trait.Trait
 import net.kyori.adventure.extra.kotlin.plus
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.extra.kotlin.translatable
@@ -16,10 +14,10 @@ import org.bukkit.command.CommandSender
 import org.bukkit.entity.Entity
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
-import org.bukkit.event.EventHandler
 import org.bukkit.event.player.PlayerInteractEntityEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import java.net.URL
+
+internal val MOB_SELECTIONS = mutableMapOf<Player, MutableSet<Entity>>()
 
 class WorldWarpMobNpc(
     private val plugin: VanilandPlugin,
@@ -57,85 +55,81 @@ class WorldWarpMobNpc(
 
     override val key: Key<WorldWarpMobNpc> = Companion
 
-    internal val mobSelections = mutableMapOf<Player, MutableSet<Entity>>()
-
     override suspend fun onEnable() {
+        registerListeners()
         registerCommands()
     }
 
     @Suppress("RemoveExplicitTypeArguments")
     private suspend fun registerCommands() {
-        val command = command<CommandSender>("spawnWorldWarpMobNpc") {
+        val command = command<CommandSender>("worldWarpMobNpc") {
             required { it.hasPermission(Permissions.ADMIN) }
 
-            runs {
-                if (source !is Player) {
-                    sendMessage(
-                        source,
+            literal("start") {
+                runs {
+                    if (source !is Player) {
+                        sendMessage(
+                            source,
+                            text {
+                                content("You must be a player to use this command.")
+                                color(NamedTextColor.RED)
+                            }
+                        )
+                        return@runs
+                    }
+                    val player = source as Player
+
+                    MOB_SELECTIONS[player] = mutableSetOf()
+                    player.sendMessage(
+                        player,
                         text {
-                            content("You must be a player to use this command.")
-                            color(NamedTextColor.RED)
+                            content("Mobの選択を開始しました")
+                            color(NamedTextColor.YELLOW)
                         }
                     )
                     return@runs
                 }
+            }
+            literal("cancel") {
+                runs {
+                    if (source !is Player) {
+                        sendMessage(
+                            source,
+                            text {
+                                content("You must be a player to use this command.")
+                                color(NamedTextColor.RED)
+                            }
+                        )
+                        return@runs
+                    }
+                    val player = source as Player
 
-                val npc = CitizensAPI.getNPCRegistry().createNPC(
-                    EntityType.PLAYER,
-                    "§b動物移送受付"
-                ).apply {
-                    addTrait(WorldWarpMobTrait())
+                    if (MOB_SELECTIONS.remove(player) != null) {
+                        player.sendMessage(
+                            player,
+                            text {
+                                content("Mobの選択をキャンセルしました")
+                                color(NamedTextColor.YELLOW)
+                            }
+                        )
+                    }
+                    return@runs
                 }
-                npc.spawn((source as Player).location)
-                // https://ja.namemc.com/skin/fdd411d4bcb02677
-                (npc.entity as Player).playerProfile.textures.skin = URL(
-                    "https://s.namemc.com/i/fdd411d4bcb02677.png"
-                )
             }
         }
         plugin.registerCommand(command)
     }
 
-    inner class WorldWarpMobTrait : Trait("worldWarpMobTrait") {
-        @EventHandler
-        fun onClick(event: NPCRightClickEvent) {
-            if (event.npc != npc) return
-
-            val selections = mobSelections[event.clicker]
-            if (selections == null) {
-                mobSelections[event.clicker] = mutableSetOf()
-                sendMessage(
-                    event.clicker,
-                    text {
-                        content("Mobの選択を開始しました")
-                        color(NamedTextColor.YELLOW)
-                    }
-                )
-                return
-            } else {
-                mobSelections.remove(event.clicker)
-                sendMessage(
-                    event.clicker,
-                    text {
-                        content("Mobの選択をキャンセルしました")
-                        color(NamedTextColor.YELLOW)
-                    }
-                )
-            }
+    private fun registerListeners() = plugin.events {
+        on<PlayerQuitEvent> { event ->
+            MOB_SELECTIONS.remove(event.player)
         }
 
-        @EventHandler
-        fun onLogout(event: PlayerQuitEvent) {
-            mobSelections.remove(event.player)
-        }
-
-        @EventHandler
-        fun onMobClick(event: PlayerInteractEntityEvent) {
-            val selections = mobSelections[event.player] ?: return
-            if (event.rightClicked.type !in ALLOWED_ENTITY_TYPES) return
+        on<PlayerInteractEntityEvent> { event ->
+            val selections = MOB_SELECTIONS[event.player] ?: return@on
+            if (event.rightClicked.type !in ALLOWED_ENTITY_TYPES) return@on
             selections.add(event.rightClicked)
-            sendMessage(
-                event.player,
+            event.player.sendMessage(
                 (event.rightClicked.customName() ?: event.rightClicked.name()) + text {
                     resetStyle()
                     content("を選択しました")
