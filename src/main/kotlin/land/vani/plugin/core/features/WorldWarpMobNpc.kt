@@ -24,12 +24,15 @@ class WorldWarpMobNpc(
 ) : Feature<WorldWarpMobNpc>() {
     companion object : Key<WorldWarpMobNpc>("worldWarpMobNpc") {
         private val ALLOWED_ENTITY_TYPES = setOf(
+            EntityType.ALLAY,
             EntityType.BEE,
             EntityType.CAT,
             EntityType.CHICKEN,
             EntityType.COW,
             EntityType.DONKEY,
+            EntityType.DOLPHIN,
             EntityType.FOX,
+            EntityType.FROG,
             EntityType.GHAST,
             EntityType.GOAT,
             EntityType.HORSE,
@@ -46,7 +49,6 @@ class WorldWarpMobNpc(
             EntityType.SHEEP,
             EntityType.SKELETON_HORSE,
             EntityType.STRIDER,
-            EntityType.TADPOLE,
             EntityType.TURTLE,
             EntityType.VILLAGER,
             EntityType.WOLF
@@ -63,7 +65,7 @@ class WorldWarpMobNpc(
     @Suppress("RemoveExplicitTypeArguments")
     private suspend fun registerCommands() {
         val command = command<CommandSender>("worldWarpMobNpc") {
-            required { it.hasPermission(Permissions.ADMIN) }
+            required { it.hasPermission(Permissions.PORTAL_WARP) }
 
             literal("start") {
                 runs {
