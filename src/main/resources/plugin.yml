@@ -3,7 +3,7 @@ version: '${version}'
 main: land.vani.plugin.core.VanilandPlugin
 api-version: 1.19
 authors: [ rona_tombo ]
-load: STARTUP
+load: POSTWORLD
 softdepend:
   - Citizens
   - Multiverse-Core

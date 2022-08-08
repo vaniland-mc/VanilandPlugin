@@ -24,8 +24,6 @@ import land.vani.plugin.core.features.Vote
 import land.vani.plugin.core.features.WorldWarpMobNpc
 import land.vani.plugin.core.features.WorldWarpNpc
 import land.vani.plugin.core.features.commands.Commands
-import net.citizensnpcs.Citizens
-import net.citizensnpcs.api.npc.NPCRegistry
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.luckperms.api.LuckPerms
 import org.koin.core.module.dsl.singleOf
@@ -130,12 +128,6 @@ fun adopterModule() = module {
     }
     single {
         get<LuckPerms>().userManager
-    }
-    single {
-        (get<VanilandPlugin>().server.pluginManager.getPlugin("Citizens") as Citizens)
-    }
-    single<NPCRegistry> {
-        get<Citizens>().npcRegistry
     }
     single {
         get<VanilandPlugin>().server.pluginManager.getPlugin("Multiverse-Core") as MultiverseCore

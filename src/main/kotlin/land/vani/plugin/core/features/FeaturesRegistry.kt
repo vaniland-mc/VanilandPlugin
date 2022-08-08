@@ -39,9 +39,11 @@ class FeaturesRegistry(
         plugin.logger.info("Disabled all features!")
     }
 
-    inline fun <reified T : Feature<T>> getFeature(key: Feature.Key<T>): T? = allFeatures[key]
-        ?.takeIf {
-            val feature by it
-            feature.isEnabled
-        } as T?
+    inline fun <reified T : Feature<T>> getFeature(key: Feature.Key<T>): T? = (
+        allFeatures[key]
+            ?.takeIf {
+                val feature by it
+                feature.isEnabled
+            } as Lazy<*>
+        ).value as T?
 }

@@ -29,6 +29,12 @@
       "groupName": "kotest"
     },
     {
+      "matchPackagePrefixes": [
+        "land.vani.mcorouhlin:"
+      ],
+      "groupName": "mcorouhlin"
+    },
+    {
       "matchUpdateTypes": [
         "minor",
         "patch"

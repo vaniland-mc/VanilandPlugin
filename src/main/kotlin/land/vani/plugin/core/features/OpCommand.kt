@@ -78,7 +78,8 @@ class OpCommand(
         }
     }
 
-    private fun createRemoveOpCommand() = command<CommandSender>("removeOpCommand") {
+    @Suppress("RemoveExplicitTypeArguments")
+    private fun createRemoveOpCommand() = command<CommandSender>("removeOp") {
         required { it.hasPermission(Permissions.ADMIN) }
 
         runs {

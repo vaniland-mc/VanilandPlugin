@@ -30,9 +30,7 @@ class SafetyLogin(
     override val key: Key<SafetyLogin> = Companion
 
     override suspend fun onEnable() {
-        println("registerEventListener")
         registerEventListener()
-        println("registerCommands")
         registerCommands()
     }
 
