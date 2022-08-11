@@ -19,6 +19,7 @@ import land.vani.plugin.core.features.OpCommand
 import land.vani.plugin.core.features.PortalWarpNpc
 import land.vani.plugin.core.features.ResetWorld
 import land.vani.plugin.core.features.SafetyLogin
+import land.vani.plugin.core.features.SuppressAdvancementOp
 import land.vani.plugin.core.features.VanilandCommand
 import land.vani.plugin.core.features.Vote
 import land.vani.plugin.core.features.WorldWarpMobNpc
@@ -90,34 +91,36 @@ fun configModule() = module {
 
 fun featuresModule() = module {
     singleOf(::AutoMessage)
-    singleOf(::Newbie)
-    singleOf(::Vote)
-    singleOf(::SafetyLogin)
-    singleOf(::VanilandCommand)
-    singleOf(::OpCommand)
-    singleOf(::Commands)
-    singleOf(::PortalWarpNpc)
-    singleOf(::WorldWarpNpc)
-    singleOf(::WorldWarpMobNpc)
-    singleOf(::ResetWorld)
     singleOf(::AutoRestart)
+    singleOf(::Commands)
     singleOf(::EntityCount)
+    singleOf(::Newbie)
+    singleOf(::OpCommand)
+    singleOf(::PortalWarpNpc)
+    singleOf(::ResetWorld)
+    singleOf(::SafetyLogin)
+    singleOf(::SuppressAdvancementOp)
+    singleOf(::VanilandCommand)
+    singleOf(::Vote)
+    singleOf(::WorldWarpMobNpc)
+    singleOf(::WorldWarpNpc)
 
     single(named("features")) {
         mapOf(
             AutoMessage to lazy { get<AutoMessage>() },
-            Newbie to lazy { get<Newbie>() },
-            Vote to lazy { get<Vote>() },
-            SafetyLogin to lazy { get<SafetyLogin>() },
-            VanilandCommand to lazy { get<VanilandCommand>() },
-            OpCommand to lazy { get<OpCommand>() },
-            Commands to lazy { get<Commands>() },
-            PortalWarpNpc to lazy { get<PortalWarpNpc>() },
-            WorldWarpNpc to lazy { get<WorldWarpNpc>() },
-            WorldWarpMobNpc to lazy { get<WorldWarpMobNpc>() },
-            ResetWorld to lazy { get<ResetWorld>() },
             AutoRestart to lazy { get<AutoRestart>() },
-            EntityCount to lazy { get<EntityCount>() }
+            Commands to lazy { get<Commands>() },
+            EntityCount to lazy { get<EntityCount>() },
+            OpCommand to lazy { get<OpCommand>() },
+            Newbie to lazy { get<Newbie>() },
+            PortalWarpNpc to lazy { get<PortalWarpNpc>() },
+            ResetWorld to lazy { get<ResetWorld>() },
+            SafetyLogin to lazy { get<SafetyLogin>() },
+            SuppressAdvancementOp to lazy { get<SuppressAdvancementOp>() },
+            VanilandCommand to lazy { get<VanilandCommand>() },
+            Vote to lazy { get<Vote>() },
+            WorldWarpMobNpc to lazy { get<WorldWarpMobNpc>() },
+            WorldWarpNpc to lazy { get<WorldWarpNpc>() },
         )
     }
 }
