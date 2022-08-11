@@ -1,15 +1,19 @@
 package land.vani.plugin.core.features
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.plus
 import land.vani.plugin.core.VanilandPlugin
+import land.vani.plugin.core.timer.timerFlow
 import net.kyori.adventure.extra.kotlin.text
 import net.kyori.adventure.text.format.NamedTextColor
+import java.time.Duration
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.ZoneId
-import java.util.Date
-import java.util.Timer
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.schedule
+import kotlin.time.Duration.Companion.seconds
+import kotlin.time.toKotlinDuration
 
 class AutoRestart(
     private val plugin: VanilandPlugin,
@@ -22,20 +26,19 @@ class AutoRestart(
 
     @Suppress("MagicNumber")
     override suspend fun onEnable() {
+        val datetimeToRestart = LocalDate.now().plusDays(1).atTime(RESTART_TIME)
         var seconds = 60
-        Timer().schedule(
-            LocalDate.now().plusDays(1).atTime(RESTART_TIME)
-                .atZone(ZoneId.of("Asia/Tokyo"))
-                .toInstant().let { Date.from(it) },
-            TimeUnit.SECONDS.toMicros(1)
-        ) {
+        timerFlow(
+            period = 1.seconds,
+            initialDelay = Duration.between(LocalDateTime.now(), datetimeToRestart).toKotlinDuration()
+        ).onEach {
             when (seconds) {
                 0 -> plugin.server.shutdown()
-                in 10..60 step 10 -> broadcast("$seconds 病後にサーバーが定時再起動します")
-                in 1..10 -> broadcast("$seconds 病後にサーバーが定時再起動します")
+                in 10..60 step 10 -> broadcast("$seconds 秒後にサーバーが定時再起動します")
+                in 1..10 -> broadcast("$seconds 秒後にサーバーが定時再起動します")
             }
             seconds--
-        }
+        }.launchIn(plugin + Dispatchers.Unconfined)
     }
 
     private fun broadcast(message: String) {
