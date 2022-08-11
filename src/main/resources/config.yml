@@ -1,8 +1,15 @@
 features:
   autoMessage: true
-  newbie: true
-  safetyLogin: true
-  vanilandCommand: true
+  autoRestart: true
   commands: true
-  portalWarpNpc: true
   entityCount: true
+  newbie: true
+  opCommand: true
+  portalWarpNpc: true
+  resetWorld: true
+  safetyLogin: true
+  suppressAdvancementsOp: true
+  vanilandCommand: true
+  vote: true
+  worldWarpMobNpc: true
+  worldWarpNpc: true
