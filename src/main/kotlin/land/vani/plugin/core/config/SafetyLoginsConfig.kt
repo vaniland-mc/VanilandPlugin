@@ -31,16 +31,16 @@ class SafetyLoginsConfig(plugin: VanilandPlugin) {
 
     val safetyLogins: MutableMap<UUID, SafetyLoginConfigNode>
         get() = config.getConfigurationSection("safetyLogins")
-            ?.getValues(true)
+            ?.getKeys(false)
+            ?.mapNotNull { it to config.getConfigurationSection("safetyLogins.$it")!! }
             .orEmpty()
-            .map { (key, value) ->
-                @Suppress("UNCHECKED_CAST")
-                value as Map<String, Any>
-                val player = UUID.fromString(key)
-                val location = value["location"] as Location
+            .associateTo(mutableMapOf()) { (uuid, section) ->
+                val player = UUID.fromString(uuid)
+                val location = section["location"] as Location
+                val reason = section["reason"] as String
 
-                player to SafetyLoginConfigNode(location, "")
-            }.toMap(mutableMapOf()).let { delegate ->
+                player to SafetyLoginConfigNode(location, reason)
+            }.let { delegate ->
                 ObservableMap(
                     delegate,
                     putCallback = { key, value ->
