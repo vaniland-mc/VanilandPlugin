@@ -81,7 +81,7 @@ fun configModule() = module {
         }
     }
     single {
-        ResetWorldConfig(get()).apply {
+        ResetWorldConfig(get(), get()).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }
