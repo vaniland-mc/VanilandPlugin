@@ -13,7 +13,7 @@ plugins {
 }
 
 group = "land.vani.plugin"
-version = "2.0.5"
+version = "2.1.0"
 
 repositories {
     mavenLocal()
@@ -32,13 +32,6 @@ repositories {
         url = uri("https://oss.sonatype.org/content/groups/public/")
     }
     maven {
-        name = "BanManager repo"
-        url = uri("https://ci.frostcast.net/plugin/repository/everything")
-        content {
-            includeGroup("me.confuser.banmanager.BanManagerLibs")
-        }
-    }
-    maven {
         name = "OnARandomBox"
         url = uri("https://repo.onarandombox.com/content/groups/public/")
         content {
@@ -51,13 +44,13 @@ repositories {
 dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.21.0")
 
-    paperDevBundle("1.19.1-R0.1-SNAPSHOT")
+    paperDevBundle("1.19.2-R0.1-SNAPSHOT")
     implementation("net.kyori:adventure-extra-kotlin:4.11.0") {
         exclude("net.kyori")
     }
 
-    implementation("land.vani.mcorouhlin:mcorouhlin-api:6.0.5")
-    implementation("land.vani.mcorouhlin:mcorouhlin-paper:6.0.5")
+    implementation("land.vani.mcorouhlin:mcorouhlin-api:7.0.0")
+    implementation("land.vani.mcorouhlin:mcorouhlin-paper:7.0.0")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-api:SNAPSHOT")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-paper:SNAPSHOT")
 
@@ -72,7 +65,6 @@ dependencies {
         exclude("org.bstats")
     }
     compileOnly("net.luckperms:api:5.4")
-    compileOnly("me.confuser.banmanager:BanManagerBukkit:7.8.0")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-api:2.7.2")
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
     compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
