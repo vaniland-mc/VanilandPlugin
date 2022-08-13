@@ -8,7 +8,7 @@ fun Iterable<Component>.joinToComponent(
     postfix: Component = Component.empty(),
     limit: Int = -1,
     truncated: Component = Component.text("..."),
-): Component = joinTo(Component.empty(), separator, prefix, postfix, limit, truncated)
+): Component = joinTo(Component.text().build(), separator, prefix, postfix, limit, truncated)
 
 @Suppress("LongParameterList")
 fun Iterable<Component>.joinTo(
@@ -19,18 +19,19 @@ fun Iterable<Component>.joinTo(
     limit: Int = -1,
     truncated: Component = Component.text("..."),
 ): Component {
-    buffer.append(prefix)
+    var bufferRef = buffer
+    bufferRef = bufferRef.append(prefix)
     var count = 0
     for (element in this) {
-        if (++count > 1) buffer.append(separator)
+        if (++count > 1) bufferRef = bufferRef.append(separator)
         if (limit < 0 || count <= limit) {
-            buffer.append(element)
+            bufferRef = bufferRef.append(element)
         } else {
             break
         }
     }
-    if (limit in 0 until count) buffer.append(truncated)
-    buffer.append(postfix)
+    if (limit in 0 until count) bufferRef = bufferRef.append(truncated)
+    bufferRef = bufferRef.append(postfix)
 
-    return buffer
+    return bufferRef
 }

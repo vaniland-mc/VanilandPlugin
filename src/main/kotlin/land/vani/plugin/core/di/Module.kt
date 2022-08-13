@@ -46,28 +46,7 @@ fun coreModule(plugin: VanilandPlugin, mainConfig: MainConfig) = module {
 
 fun configModule() = module {
     single {
-        SafetyLoginsConfig(get()).apply {
-            runBlocking(Dispatchers.IO) {
-                reload()
-            }
-        }
-    }
-    single {
         AutoMessagesConfig(get(), get()).apply {
-            runBlocking(Dispatchers.IO) {
-                reload()
-            }
-        }
-    }
-    single {
-        PortalWarpNpcsConfig(get()).apply {
-            runBlocking(Dispatchers.IO) {
-                reload()
-            }
-        }
-    }
-    single {
-        WorldWarpNpcsConfig(get(), get()).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }
@@ -81,7 +60,28 @@ fun configModule() = module {
         }
     }
     single {
+        PortalWarpNpcsConfig(get()).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
         ResetWorldConfig(get(), get()).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
+        SafetyLoginsConfig(get()).apply {
+            runBlocking(Dispatchers.IO) {
+                reload()
+            }
+        }
+    }
+    single {
+        WorldWarpNpcsConfig(get(), get()).apply {
             runBlocking(Dispatchers.IO) {
                 reload()
             }
