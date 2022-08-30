@@ -54,7 +54,7 @@ dependencies {
 //    implementation("land.vani.mcorouhlin:mcorouhlin-api:SNAPSHOT")
 //    implementation("land.vani.mcorouhlin:mcorouhlin-paper:SNAPSHOT")
 
-    compileOnly("com.github.LeonMangler:SuperVanish:6.2.7") {
+    compileOnly("com.github.LeonMangler:SuperVanish:6.2.12") {
         exclude("com.comphenix.protocol", "ProtocolLib-API")
         exclude("net.citizensnpcs", "citizensapi")
         exclude("com.sk89q.worldguard", "worldguard-bukkit")
