@@ -72,7 +72,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.10")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
-    implementation("io.insert-koin:koin-core:3.3.3")
+    implementation("io.insert-koin:koin-core:3.4.0")
 
     implementation("dev.kord:kord-core:0.8.0-M17")
 
