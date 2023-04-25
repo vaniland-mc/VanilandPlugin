@@ -74,7 +74,7 @@ dependencies {
 
     implementation("io.insert-koin:koin-core:3.4.0")
 
-    implementation("dev.kord:kord-core:0.8.3")
+    implementation("dev.kord:kord-core:0.9.0")
 
     testImplementation("io.kotest:kotest-runner-junit5:5.6.1")
     testImplementation("io.kotest:kotest-assertions-core:5.6.1")
