@@ -9,7 +9,7 @@ plugins {
 
     id("com.github.johnrengelman.shadow") version "7.1.2"
 
-    id("io.papermc.paperweight.userdev") version "1.5.4"
+    id("io.papermc.paperweight.userdev") version "1.5.5"
 }
 
 group = "land.vani.plugin"
