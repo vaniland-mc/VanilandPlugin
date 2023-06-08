@@ -2,7 +2,7 @@ import io.gitlab.arturbosch.detekt.Detekt
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.8.21"
+    kotlin("jvm") version "1.8.22"
 
     id("org.jetbrains.kotlinx.kover") version "0.7.1"
     id("io.gitlab.arturbosch.detekt") version "1.23.0"
@@ -69,7 +69,7 @@ dependencies {
     compileOnly("com.github.NuVotifier.NuVotifier:nuvotifier-bukkit:2.7.2")
     compileOnly("com.onarandombox.multiversecore:Multiverse-Core:4.2.2")
 
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.21")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.22")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
 
     implementation("io.insert-koin:koin-core:3.4.2")
